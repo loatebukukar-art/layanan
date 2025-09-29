@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Kelurahan Loa Tebu</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .hero-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .section-title {
+      position: relative;
+      padding-bottom: 15px;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      border-radius: 2px;
+    }
+    .stats-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .timeline-item {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 12px;
+      height: 12px;
+      background: #667eea;
+      border-radius: 50%;
+    }
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 1.5rem;
+      width: 2px;
+      height: calc(100% + 0.5rem);
+      background: #e5e7eb;
+    }
+    .timeline-item:last-child::after {
+      display: none;
+    }
+    .chart-container {
+      height: 300px;
+    }
+    @media (max-width: 768px) {
+      .chart-container {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light">
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark hero-gradient shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">
+        <i class="bi bi-house-door me-2"></i>Kelurahan Loa Tebu
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Beranda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="profil.html">Profil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="form.html">Form Layanan</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="aduan.html">Kotak Aduan</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="tracking.html">Tracking</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="admin.html">Admin</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-gradient text-white py-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <h1 class="display-4 fw-bold mb-3">Profil Kelurahan Loa Tebu</h1>
+          <p class="lead mb-4">Kecamatan Tenggarong, Kabupaten Kutai Kartanegara</p>
+          <div class="d-flex flex-wrap gap-3">
+            <span class="badge bg-light text-dark px-3 py-2">
+              <i class="bi bi-geo-alt me-1"></i>Kutai Kartanegara
+            </span>
+            <span class="badge bg-light text-dark px-3 py-2">
+              <i class="bi bi-people me-1"></i>3.860 Jiwa
+            </span>
+            <span class="badge bg-light text-dark px-3 py-2">
+              <i class="bi bi-house me-1"></i>1.156 KK
+            </span>
+          </div>
+        </div>
+        <div class="col-lg-4 text-center">
+          <div class="bg-white bg-opacity-20 rounded-3 p-4">
+            <i class="bi bi-building display-1"></i>
+            <h5 class="mt-3">Kelurahan</h5>
+            <p class="mb-0">Loa Tebu</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sejarah -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2 class="section-title text-center mb-5">Sejarah Kelurahan</h2>
+          <div class="card card-hover border-0 shadow-sm">
+            <div class="card-body p-4">
+              <p class="lead text-muted mb-4">Kelurahan Loa Tebu adalah salah satu wilayah di Kecamatan Tenggarong, Kabupaten Kutai Kartanegara. Awalnya terdiri dari Dusun Bloro, Dusun Mentong, dan Dusun Loa Tebu yang kemudian digabung menjadi satu desa bernama Loa Tebu. Pada tahun 2016, wilayah Batu Dinding bergabung ke Kelurahan Loa Tebu.</p>
+              
+              <h5 class="fw-bold mb-4">
+                <i class="bi bi-clock-history me-2 text-primary"></i>Timeline Kepemimpinan
+              </h5>
+              
+              <div class="timeline">
+                <div class="timeline-item">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 class="fw-bold mb-1">Bapak Suyono</h6>
+                      <p class="text-muted mb-0">Kepala Kelurahan Periode Pertama</p>
+                    </div>
+                    <span class="badge bg-primary">2001-2006</span>
+                  </div>
+                </div>
+                
+                <div class="timeline-item">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 class="fw-bold mb-1">Bapak Astuti</h6>
+                      <p class="text-muted mb-0">Kepala Kelurahan Periode Kedua</p>
+                    </div>
+                    <span class="badge bg-primary">2009-2012</span>
+                  </div>
+                </div>
+                
+                <div class="timeline-item">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 class="fw-bold mb-1">Bapak Ar. Ambo Dalle</h6>
+                      <p class="text-muted mb-0">Kepala Kelurahan Periode Ketiga</p>
+                    </div>
+                    <span class="badge bg-primary">2013-2017</span>
+                  </div>
+                </div>
+                
+                <div class="timeline-item">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 class="fw-bold mb-1">Bapak Lukman</h6>
+                      <p class="text-muted mb-0">Kepala Kelurahan Periode Keempat</p>
+                    </div>
+                    <span class="badge bg-primary">2017-2021</span>
+                  </div>
+                </div>
+                
+                <div class="timeline-item">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 class="fw-bold mb-1">Bapak Rahimudin</h6>
+                      <p class="text-muted mb-0">Kepala Kelurahan Saat Ini</p>
+                    </div>
+                    <span class="badge bg-success">2022-Sekarang</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demografi -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title text-center mb-5">Demografi Kelurahan</h2>
+      
+      <!-- Stats Cards -->
+      <div class="row mb-5">
+        <div class="col-md-4 mb-3">
+          <div class="stats-card">
+            <i class="bi bi-people display-4 mb-3"></i>
+            <h3 class="fw-bold">3.860</h3>
+            <p class="mb-0">Total Penduduk</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="stats-card">
+            <i class="bi bi-house display-4 mb-3"></i>
+            <h3 class="fw-bold">1.156</h3>
+            <p class="mb-0">Kepala Keluarga</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="stats-card">
+            <i class="bi bi-graph-up display-4 mb-3"></i>
+            <h3 class="fw-bold">58%</h3>
+            <p class="mb-0">Partisipasi Pemilu</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <div class="card card-hover border-0 shadow-sm">
+            <div class="card-body p-4">
+              <h5 class="fw-bold mb-4">
+                <i class="bi bi-bar-chart me-2 text-primary"></i>Distribusi Penduduk Berdasarkan Usia
+              </h5>
+              <div class="chart-container">
+                <canvas id="chartUsia"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sosial & Pendidikan -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="section-title text-center mb-5">Kehidupan Sosial & Pendidikan</h2>
+      
+      <div class="row">
+        <div class="col-lg-6 mb-4">
+          <div class="card card-hover border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+              <h5 class="fw-bold mb-4">
+                <i class="bi bi-mortarboard me-2 text-primary"></i>Tingkat Pendidikan
+              </h5>
+              <div class="chart-container">
+                <canvas id="chartPendidikan"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+          <div class="card card-hover border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+              <h5 class="fw-bold mb-4">
+                <i class="bi bi-book me-2 text-primary"></i>Status Sekolah
+              </h5>
+              <div class="chart-container">
+                <canvas id="chartSekolah"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-lg-8 mx-auto">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+              <div class="row text-center">
+                <div class="col-md-4">
+                  <div class="p-3">
+                    <i class="bi bi-check-circle-fill text-success display-4 mb-3"></i>
+                    <h4 class="fw-bold text-success">58%</h4>
+                    <p class="text-muted mb-0">Partisipasi Pemilu</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3">
+                    <i class="bi bi-graduation-cap text-primary display-4 mb-3"></i>
+                    <h4 class="fw-bold text-primary">967</h4>
+                    <p class="text-muted mb-0">Sedang Sekolah</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3">
+                    <i class="bi bi-house text-info display-4 mb-3"></i>
+                    <h4 class="fw-bold text-info">1.156</h4>
+                    <p class="text-muted mb-0">Kepala Keluarga</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stratifikasi Sosial -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title text-center mb-5">Stratifikasi Sosial</h2>
+      
+      <div class="row">
+        <div class="col-lg-6 mx-auto">
+          <div class="card card-hover border-0 shadow-sm">
+            <div class="card-body p-4">
+              <h5 class="fw-bold mb-4">
+                <i class="bi bi-pie-chart me-2 text-primary"></i>Distribusi Kemampuan Ekonomi
+              </h5>
+              <div class="chart-container">
+                <canvas id="chartStratifikasi"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-lg-8 mx-auto">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+              <div class="row text-center">
+                <div class="col-md-4">
+                  <div class="p-3">
+                    <i class="bi bi-exclamation-triangle-fill text-warning display-4 mb-3"></i>
+                    <h4 class="fw-bold text-warning">40%</h4>
+                    <p class="text-muted mb-0">Kurang Mampu</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3">
+                    <i class="bi bi-check-circle text-success display-4 mb-3"></i>
+                    <h4 class="fw-bold text-success">45%</h4>
+                    <p class="text-muted mb-0">Mampu</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-3">
+                    <i class="bi bi-star-fill text-primary display-4 mb-3"></i>
+                    <h4 class="fw-bold text-primary">15%</h4>
+                    <p class="text-muted mb-0">Sangat Mampu</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="hero-gradient text-white py-4">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h5 class="fw-bold mb-2">
+            <i class="bi bi-building me-2"></i>Kelurahan Loa Tebu
+          </h5>
+          <p class="mb-0">Kecamatan Tenggarong, Kabupaten Kutai Kartanegara</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p class="mb-0">&copy; 2025 Kelurahan Loa Tebu. Semua hak dilindungi.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Chart.js Configuration
+    Chart.defaults.font.family = "'Inter', sans-serif";
+    Chart.defaults.color = '#6c757d';
+    
+    // Chart Usia
+    const ctxUsia = document.getElementById('chartUsia');
+    new Chart(ctxUsia, {
+      type: 'bar',
+      data: {
+        labels: ['0-4','5-9','10-14','15-19','20-24','25-29','30-34','35-39','40-44','45-49','50-54','55-59','60-64','65+'],
+        datasets: [
+          {
+            label: 'Laki-laki', 
+            data: [111,152,192,223,208,150,130,132,156,136,115,88,82], 
+            backgroundColor: 'rgba(102, 126, 234, 0.8)',
+            borderColor: 'rgba(102, 126, 234, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Perempuan', 
+            data: [104,162,187,174,149,113,129,130,159,132,94,70,75], 
+            backgroundColor: 'rgba(118, 75, 162, 0.8)',
+            borderColor: 'rgba(118, 75, 162, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              padding: 20,
+              usePointStyle: true
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: 'rgba(0,0,0,0.1)'
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            }
+          }
+        }
+      }
+    });
+
+    // Chart Pendidikan
+    const ctxPendidikan = document.getElementById('chartPendidikan');
+    new Chart(ctxPendidikan, {
+      type: 'bar',
+      data: {
+        labels: ['Tidak punya ijazah','SD','SMP','SMA','SMK','D1/D2/D3','D4/S1','S2','S3'],
+        datasets: [{
+          label:'Jumlah', 
+          data:[244,456,464,370,135,20,110,3,0], 
+          backgroundColor: 'rgba(102, 126, 234, 0.8)',
+          borderColor: 'rgba(102, 126, 234, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: 'rgba(0,0,0,0.1)'
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            }
+          }
+        }
+      }
+    });
+
+    // Chart Sekolah
+    const ctxSekolah = document.getElementById('chartSekolah');
+    new Chart(ctxSekolah, {
+      type: 'pie',
+      data: {
+        labels: ['Putus Sekolah','Sedang Sekolah','Tidak Sekolah'],
+        datasets: [{
+          data:[117,967,2776], 
+          backgroundColor:['#ffc107','#0d6efd','#dc3545'],
+          borderWidth: 2,
+          borderColor: '#fff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              padding: 20,
+              usePointStyle: true
+            }
+          }
+        }
+      }
+    });
+
+    // Chart Stratifikasi
+    const ctxStrat = document.getElementById('chartStratifikasi');
+    new Chart(ctxStrat, {
+      type: 'doughnut',
+      data: {
+        labels: ['Kurang Mampu','Mampu','Sangat Mampu'],
+        datasets: [{
+          data:[40,45,15], 
+          backgroundColor:['#ffc107','#198754','#0d6efd'],
+          borderWidth: 3,
+          borderColor: '#fff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              padding: 20,
+              usePointStyle: true
+            }
+          }
+        }
+      }
+    });
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Add animation on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all cards
+    document.querySelectorAll('.card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+  </script>
+</body>
+</html>

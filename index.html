@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Formulir Layanan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .main-container {
+            background-color: var(--bg-primary);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-xl);
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .main-title {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            letter-spacing: -0.025em;
+        }
+
+        .main-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            font-weight: 400;
+        }
+
+        .card {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            height: 100%;
+            background: var(--bg-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-body {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .card-icon {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1);
+            color: var(--accent-color);
+        }
+
+        .card-title {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+            letter-spacing: -0.025em;
+        }
+
+        .card-text {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .btn-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            color: white;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            letter-spacing: 0.025em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .btn-card:hover {
+            background: linear-gradient(135deg, var(--primary-dark), #1e40af);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-card:hover::before {
+            left: 100%;
+        }
+
+        .btn-admin {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+        }
+
+        .btn-admin:hover {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .feature-list li:hover {
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .feature-list li i {
+            color: var(--success-color);
+            margin-right: 0.75rem;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .info-section {
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .info-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .info-item .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-item h5 {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+        }
+
+        .info-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 1rem;
+                padding: 1.5rem;
+                border-radius: var(--border-radius);
+            }
+
+            .card-body {
+                padding: 1.5rem;
+            }
+
+            .main-title {
+                margin-bottom: 0.75rem;
+            }
+
+            .main-subtitle {
+                margin-bottom: 2rem;
+            }
+
+            .info-section {
+                padding: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .btn-card {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-container {
+                margin: 0.5rem;
+                padding: 1rem;
+            }
+
+            .card-body {
+                padding: 1rem;
+            }
+
+            .main-title {
+                font-size: 1.5rem;
+            }
+
+            .main-subtitle {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .feature-list {
+                margin: 1rem 0;
+            }
+
+            .feature-list li {
+                font-size: 0.85rem;
+                padding: 0.375rem 0;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .loaded {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Focus States for Accessibility */
+        .btn-card:focus,
+        .card:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-container">
+            <h1 class="main-title text-center">Sistem Formulir Layanan</h1>
+            <p class="main-subtitle text-center">Portal digital untuk pengajuan surat dan administrasi</p>
+            
+            <div class="row g-4">
+                <!-- Form Pengajuan Surat -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-icon">
+                                <i class="bi bi-file-earmark-text"></i>
+                            </div>
+                            <h3 class="card-title">Form Pengajuan Surat</h3>
+                            <p class="card-text text-justify">
+                                Ajukan berbagai jenis surat secara online dengan mudah dan cepat. Upload dokumen pendukung dan dapatkan konfirmasi langsung.
+                            </p>
+                            <a href="form.html" class="btn-card">
+                                <i class="bi bi-plus-circle"></i> Ajukan Surat
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tracking Permohonan -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-icon">
+                                <i class="bi bi-search"></i>
+                            </div>
+                            <h3 class="card-title">Tracking Permohonan</h3>
+                            <p class="card-text text-justify">
+                                Lacak status pengajuan surat Anda menggunakan NIK. Lihat progress dan download dokumen yang sudah selesai.
+                            </p>
+
+                            <a href="tracking.html" class="btn-card">
+                                <i class="bi bi-search"></i> Lacak Status
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Admin Panel -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-icon">
+                                <i class="bi bi-gear-fill"></i>
+                            </div>
+                            <h3 class="card-title">Panel Admin</h3>
+                            <p class="card-text text-justify">
+                                Kelola dan monitor semua pengajuan surat yang masuk. Lihat data lengkap, download dokumen, dan kelola administrasi.
+                            </p>
+                            <a href="admin.html" class="btn-card btn-admin">
+                                <i class="bi bi-shield-check"></i> Akses Admin
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Informasi Tambahan -->
+            <div class="info-section">
+                <h4 class="text-center mb-4" style="color: var(--text-primary); font-weight: 600;">
+                    <i class="bi bi-info-circle me-2"></i> Informasi Sistem
+                </h4>
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="info-item">
+                            <div class="card-icon">
+                                <i class="bi bi-clock-history"></i>
+                            </div>
+                            <h5>24/7 Tersedia</h5>
+                            <p>Akses sistem kapan saja untuk pengajuan surat</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="info-item">
+                            <div class="card-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                            <h5>Aman & Terpercaya</h5>
+                            <p>Data Anda terlindungi dengan sistem keamanan terbaik</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="info-item">
+                            <div class="card-icon">
+                                <i class="bi bi-lightning-charge"></i>
+                            </div>
+                            <h5>Cepat & Efisien</h5>
+                            <p>Proses pengajuan yang cepat tanpa antrian panjang</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>&copy; 2024 Sistem Formulir Layanan. Dibuat dengan ❤️ untuk kemudahan administrasi.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Enhanced loading animation with intersection observer
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            const infoItems = document.querySelectorAll('.info-item');
+            
+            // Add loading class initially
+            cards.forEach(card => {
+                card.classList.add('loading');
+            });
+            
+            infoItems.forEach(item => {
+                item.classList.add('loading');
+            });
+            
+            // Animate cards with staggered delay
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.remove('loading');
+                    card.classList.add('loaded');
+                }, index * 150);
+            });
+            
+            // Animate info items
+            setTimeout(() => {
+                infoItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.classList.remove('loading');
+                        item.classList.add('loaded');
+                    }, index * 100);
+                });
+            }, 600);
+            
+            // Enhanced hover effects for cards
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Enhanced button interactions
+            document.querySelectorAll('.btn-card').forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.05)';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+                
+                // Add ripple effect on click
+                btn.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255, 255, 255, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // Add CSS for ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Smooth scroll for any anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Add loading state management
+            const loadingOverlay = document.createElement('div');
+            loadingOverlay.id = 'loading-overlay';
+            loadingOverlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.9);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                opacity: 1;
+                transition: opacity 0.5s ease;
+            `;
+            
+            const spinner = document.createElement('div');
+            spinner.style.cssText = `
+                width: 40px;
+                height: 40px;
+                border: 4px solid #e2e8f0;
+                border-top: 4px solid var(--primary-color);
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            `;
+            
+            const spinKeyframes = `
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            `;
+            
+            const spinStyle = document.createElement('style');
+            spinStyle.textContent = spinKeyframes;
+            document.head.appendChild(spinStyle);
+            
+            loadingOverlay.appendChild(spinner);
+            document.body.appendChild(loadingOverlay);
+            
+            // Hide loading overlay after page loads
+            window.addEventListener('load', function() {
+                setTimeout(() => {
+                    loadingOverlay.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingOverlay.remove();
+                    }, 500);
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>

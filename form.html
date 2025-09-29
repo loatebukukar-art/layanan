@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pengajuan Surat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-title {
+            color: #0d6efd;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .form-control, .form-select {
+            border-radius: 6px;
+        }
+        .required:after {
+            content: " *";
+            color: red;
+        }
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            width: 100%;
+        }
+        .file-upload input[type=file] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .file-upload-label {
+            display: block;
+            padding: 10px 15px;
+            border: 1px dashed #ccc;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .file-upload:hover .file-upload-label {
+            background-color: #e9ecef;
+        }
+        .btn-submit {
+            background-color: #0d6efd;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .btn-submit:hover {
+            background-color: #0b5ed7;
+            color: white;
+        }
+        .alert {
+            display: none;
+            margin-top: 20px;
+        }
+        .form-text {
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .whatsapp-notification {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #d4edda;
+            border-radius: 6px;
+            border: 1px solid #c3e6cb;
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2 class="form-title text-center">Form Pengajuan Surat</h2>
+            
+            <form id="suratForm">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="namaLengkap" class="form-label required">Nama Lengkap</label>
+                        <input type="text" class="form-control" id="namaLengkap" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nik" class="form-label required">NIK</label>
+                        <input type="text" class="form-control" id="nik" maxlength="16" pattern="[0-9]{16}" required>
+                        <div class="form-text">Masukkan 16 digit NIK</div>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="tempatLahir" class="form-label required">Tempat Lahir</label>
+                        <input type="text" class="form-control" id="tempatLahir" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="tanggalLahir" class="form-label required">Tanggal Lahir</label>
+                        <input type="date" class="form-control" id="tanggalLahir" required>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="jenisKelamin" class="form-label required">Jenis Kelamin</label>
+                        <select class="form-select" id="jenisKelamin" required>
+                            <option value="" selected disabled>-- Pilih Jenis Kelamin --</option>
+                            <option value="Laki-laki">Laki-laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="agama" class="form-label required">Agama</label>
+                        <select class="form-select" id="agama" required>
+                            <option value="" selected disabled>-- Pilih Agama --</option>
+                            <option value="Islam">Islam</option>
+                            <option value="Kristen">Kristen</option>
+                            <option value="Katolik">Katolik</option>
+                            <option value="Hindu">Hindu</option>
+                            <option value="Buddha">Buddha</option>
+                            <option value="Konghucu">Konghucu</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="pekerjaan" class="form-label required">Pekerjaan</label>
+                    <input type="text" class="form-control" id="pekerjaan" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="alamat" class="form-label required">Alamat</label>
+                    <textarea class="form-control" id="alamat" rows="3" required></textarea>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="jenisSurat" class="form-label required">Jenis Surat</label>
+                    <select class="form-select" id="jenisSurat" required>
+                        <option value="" selected disabled>-- Pilih Jenis Surat --</option>
+                        <optgroup label="Surat Keterangan">
+                            <option value="Surat Keterangan (beda nama, alamat)">Surat Keterangan (beda nama, alamat)</option>
+                            <option value="Surat Keterangan Domisili / Tempat Tinggal">Surat Keterangan Domisili / Tempat Tinggal</option>
+                            <option value="Surat Keterangan Kematian">Surat Keterangan Kematian</option>
+                            <option value="Surat Keterangan Pindah">Surat Keterangan Pindah</option>
+                            <option value="Surat Keterangan Kelahiran">Surat Keterangan Kelahiran</option>
+                            <option value="Surat Keterangan Penguasaan Tanah (SKPT)">Surat Keterangan Penguasaan Tanah (SKPT)</option>
+                            <option value="Surat Keterangan Pembuatan KK">Surat Keterangan Pembuatan KK</option>
+                            <option value="Surat Keterangan Perubahan Anggota KK">Surat Keterangan Perubahan Anggota KK</option>
+                            <option value="Surat Keterangan Hibah">Surat Keterangan Hibah</option>
+                        </optgroup>
+                        <optgroup label="Surat Domisili">
+                            <option value="Surat Keterangan Domisili Organisasi/Kepengurusan Masjid/Musholla">Surat Keterangan Domisili Organisasi/Kepengurusan Masjid/Musholla</option>
+                            <option value="Surat Keterangan Domisili Organisasi">Surat Keterangan Domisili Organisasi</option>
+                            <option value="Surat Domisili Organisasi">Surat Domisili Organisasi</option>
+                        </optgroup>
+                        <optgroup label="Surat Pengantar">
+                            <option value="Surat Pengantar Nikah (SPN)">Surat Pengantar Nikah (SPN)</option>
+                            <option value="Surat Pengantar BPJS">Surat Pengantar BPJS</option>
+                        </optgroup>
+                        <optgroup label="Surat Keterangan Lainnya">
+                            <option value="Surat Keterangan Tidak Mampu / Miskin">Surat Keterangan Tidak Mampu / Miskin</option>
+                            <option value="Surat Keterangan Berkelakuan Baik">Surat Keterangan Berkelakuan Baik</option>
+                            <option value="Surat Keterangan Tidak Bekerja">Surat Keterangan Tidak Bekerja</option>
+                            <option value="Surat Keterangan Tidak Miliki Rumah">Surat Keterangan Tidak Miliki Rumah</option>
+                            <option value="Surat Keterangan Kehilangan">Surat Keterangan Kehilangan</option>
+                            <option value="Surat Keterangan Kebakaran">Surat Keterangan Kebakaran</option>
+                            <option value="Surat Rekomendasi Ijin Keramaian">Surat Rekomendasi Ijin Keramaian</option>
+                            <option value="Surat Keterangan Penghasilan">Surat Keterangan Penghasilan</option>
+                            <option value="Surat Keterangan Usaha">Surat Keterangan Usaha</option>
+                            <option value="Surat Tidak Memiliki PBB">Surat Tidak Memiliki PBB</option>
+                            <option value="Surat Keterangan Catatan Kepolisian (SKCK)">Surat Keterangan Catatan Kepolisian (SKCK)</option>
+                        </optgroup>
+                        <optgroup label="Pembuatan Dokumen">
+                            <option value="Pembuatan KTP">Pembuatan KTP</option>
+                            <option value="Pembuatan Kartu Keluarga (KK)">Pembuatan Kartu Keluarga (KK)</option>
+                        </optgroup>
+                        <option value="Persyaratan Proposal">Persyaratan Proposal</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="kasiTujuan" class="form-label required">Kasi Tujuan</label>
+                    <select class="form-select" id="kasiTujuan" required>
+                        <option value="" selected disabled>-- Pilih Kasi Tujuan --</option>
+                        <option value="Kasi Pemerintahan" data-whatsapp="6285348621502">🏛️ Kasi Pemerintahan</option>
+                        <option value="Kasi Sosial" data-whatsapp="6285348621502">👥 Kasi Sosial</option>
+                        <option value="Kasi Pembangunan" data-whatsapp="6285348621502">🏗️ Kasi Pembangunan</option>
+                        <option value="Sekretariatan" data-whatsapp="6285348621502">📋 Sekretariatan</option>
+                    </select>
+                    <div class="form-text">Pilih kasi yang akan menangani pengajuan ini</div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="nomorHP" class="form-label required">Nomor HP</label>
+                        <input type="tel" class="form-control" id="nomorHP" pattern="[0-9]{10,13}" required>
+                        <div class="form-text">Contoh: 081234567890</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nomorSuratRT" class="form-label">Nomor Surat Pengantar RT</label>
+                        <input type="text" class="form-control" id="nomorSuratRT">
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="tanggalPengajuan" class="form-label required">Tanggal Pengajuan</label>
+                    <input type="date" class="form-control" id="tanggalPengajuan" required>
+                </div>
+                
+                <h5 class="mt-4 mb-3">Upload Dokumen Pendukung</h5>
+                
+                <div class="mb-3">
+                    <label for="ktp" class="form-label required">KTP</label>
+                    <div class="file-upload">
+                        <input type="file" class="form-control" id="ktp" accept=".jpg,.jpeg,.png,.pdf,.avi,.webm,.mp4" required>
+                        <label for="ktp" class="file-upload-label" data-original-text="<i class='bi bi-cloud-upload'></i> Upload scan/foto KTP (JPG, PNG, PDF, AVI, WEBM, MP4)">
+                            <i class="bi bi-cloud-upload"></i> Upload scan/foto KTP (JPG, PNG, PDF, AVI, WEBM, MP4)
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="kk" class="form-label required">Kartu Keluarga (KK)</label>
+                    <div class="file-upload">
+                        <input type="file" class="form-control" id="kk" accept=".jpg,.jpeg,.png,.pdf,.avi,.webm,.mp4" required>
+                        <label for="kk" class="file-upload-label" data-original-text="<i class='bi bi-cloud-upload'></i> Upload scan/foto Kartu Keluarga (JPG, PNG, PDF, AVI, WEBM, MP4)">
+                            <i class="bi bi-cloud-upload"></i> Upload scan/foto Kartu Keluarga (JPG, PNG, PDF, AVI, WEBM, MP4)
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="suratRT" class="form-label required">Surat Pengantar RT</label>
+                    <div class="file-upload">
+                        <input type="file" class="form-control" id="suratRT" accept=".jpg,.jpeg,.png,.pdf,.avi,.webm,.mp4" required>
+                        <label for="suratRT" class="file-upload-label" data-original-text="<i class='bi bi-cloud-upload'></i> Upload scan/foto Surat Pengantar dari RT (JPG, PNG, PDF, AVI, WEBM, MP4)">
+                            <i class="bi bi-cloud-upload"></i> Upload scan/foto Surat Pengantar dari RT (JPG, PNG, PDF, AVI, WEBM, MP4)
+                        </label>
+                    </div>
+                    <div class="form-text">Format yang didukung: JPG, PNG, PDF, AVI, WEBM, MP4. Tidak ada batasan ukuran file. Semua dokumen wajib diupload.</div>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-submit" id="submitBtn">Kirim Pengajuan</button>
+                </div>
+            </form>
+            
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Mengirim data...</p>
+            </div>
+            
+            <div class="alert alert-success" role="alert" id="successAlert">
+                <i class="bi bi-check-circle-fill"></i> Data berhasil dikirim!
+            </div>
+            
+            <div class="alert alert-danger" role="alert" id="errorAlert">
+                <i class="bi bi-exclamation-triangle-fill"></i> Terjadi kesalahan. Silakan coba lagi.
+            </div>
+            
+            <div class="whatsapp-notification" id="whatsappNotification">
+                <h5><i class="bi bi-whatsapp"></i> Notifikasi WhatsApp</h5>
+                <p>Data pengajuan telah berhasil dikirim. Klik tombol di bawah ini untuk mengirim notifikasi ke WhatsApp Kasi yang dituju:</p>
+                <a href="#" class="whatsapp-btn" id="whatsappBtn" target="_blank">
+                    <i class="bi bi-whatsapp"></i> Kirim ke WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set tanggal pengajuan default ke hari ini
+            document.getElementById('tanggalPengajuan').valueAsDate = new Date();
+            
+            // Update label file upload saat file dipilih
+            document.querySelectorAll('input[type="file"]').forEach(input => {
+                input.addEventListener('change', function() {
+                    const label = this.nextElementSibling;
+                    if (this.files && this.files.length > 0) {
+                        label.innerHTML = `<i class="bi bi-check-circle-fill text-success"></i> ${this.files[0].name}`;
+                    } else {
+                        label.innerHTML = label.getAttribute('data-original-text');
+                    }
+                });
+            });
+            
+            // Handle form submission
+            document.getElementById('suratForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Tampilkan loading spinner
+                document.getElementById('loadingSpinner').style.display = 'block';
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('successAlert').style.display = 'none';
+                document.getElementById('errorAlert').style.display = 'none';
+                document.getElementById('whatsappNotification').style.display = 'none';
+                
+                // Ambil nilai form
+                const formData = {
+                    namaLengkap: document.getElementById('namaLengkap').value,
+                    nik: document.getElementById('nik').value,
+                    tempatLahir: document.getElementById('tempatLahir').value,
+                    tanggalLahir: document.getElementById('tanggalLahir').value,
+                    jenisKelamin: document.getElementById('jenisKelamin').value,
+                    agama: document.getElementById('agama').value,
+                    pekerjaan: document.getElementById('pekerjaan').value,
+                    alamat: document.getElementById('alamat').value,
+                    jenisSurat: document.getElementById('jenisSurat').value,
+                    kasiTujuan: document.getElementById('kasiTujuan').value,
+                    nomorHP: document.getElementById('nomorHP').value,
+                    nomorSuratRT: document.getElementById('nomorSuratRT').value,
+                    tanggalPengajuan: document.getElementById('tanggalPengajuan').value
+                };
+                
+                // Ambil file
+                const ktpFile = document.getElementById('ktp').files[0];
+                const kkFile = document.getElementById('kk').files[0];
+                const suratRTFile = document.getElementById('suratRT').files[0];
+                
+                // Kirim data ke Google Apps Script
+                // Ganti URL dengan URL web app Google Apps Script Anda
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbzQnULk2687fxw-TaECPWpmrbzAgad2wNRzyNsdef44qPcg-Eh3PfBiijj3noPtIhkV/exec';
+                
+                const form = new FormData();
+                form.append('data', JSON.stringify(formData));
+                
+                // Fungsi untuk membaca file sebagai base64 dan menambahkan ke FormData
+                function readFileAsBase64(file, paramName) {
+                    return new Promise((resolve) => {
+                        if (!file) {
+                            resolve();
+                            return;
+                        }
+                        
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const base64 = event.target.result.split(',')[1];
+                            form.append(paramName, base64);
+                            resolve();
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+                
+                // Baca semua file secara berurutan
+                readFileAsBase64(ktpFile, 'ktp')
+                    .then(() => readFileAsBase64(kkFile, 'kk'))
+                    .then(() => readFileAsBase64(suratRTFile, 'suratRT'))
+                    .then(() => {
+                        // Kirim form setelah semua file dibaca
+                        fetch(scriptURL, {
+                            method: 'POST',
+                            body: form
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Sembunyikan loading spinner
+                            document.getElementById('loadingSpinner').style.display = 'none';
+                            document.getElementById('submitBtn').disabled = false;
+                            
+                            if (data.result === 'success') {
+                                document.getElementById('successAlert').style.display = 'block';
+                                document.getElementById('errorAlert').style.display = 'none';
+                                
+                                // Siapkan notifikasi WhatsApp
+                                const kasiTujuan = document.getElementById('kasiTujuan');
+                                const selectedOption = kasiTujuan.options[kasiTujuan.selectedIndex];
+                                const whatsappNumber = selectedOption.getAttribute('data-whatsapp');
+                                
+                                if (whatsappNumber) {
+                                    // Format pesan WhatsApp
+                                    const message = `Halo, saya ${formData.namaLengkap} telah mengajuan surat dengan detail sebagai berikut:%0A%0A` +
+                                        `NIK: ${formData.nik}%0A` +
+                                        `Tempat, Tanggal Lahir: ${formData.tempatLahir}, ${formData.tanggalLahir}%0A` +
+                                        `Jenis Kelamin: ${formData.jenisKelamin}%0A` +
+                                        `Agama: ${formData.agama}%0A` +
+                                        `Pekerjaan: ${formData.pekerjaan}%0A` +
+                                        `Alamat: ${formData.alamat}%0A` +
+                                        `Jenis Surat: ${formData.jenisSurat}%0A` +
+                                        `Nomor HP: ${formData.nomorHP}%0A` +
+                                        `Tanggal Pengajuan: ${formData.tanggalPengajuan}%0A%0A` +
+                                        `Mohon bantuannya untuk segera diproses. Terima kasih.`;
+                                    
+                                    // Set link WhatsApp
+                                    const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
+                                    document.getElementById('whatsappBtn').setAttribute('href', whatsappLink);
+                                    
+                                    // Tampilkan notifikasi WhatsApp
+                                    document.getElementById('whatsappNotification').style.display = 'block';
+                                }
+                                
+                                // Reset form
+                                document.getElementById('suratForm').reset();
+                                
+                                // Set tanggal pengajuan default ke hari ini
+                                document.getElementById('tanggalPengajuan').valueAsDate = new Date();
+                                
+                                // Reset label file upload
+                                document.querySelectorAll('.file-upload-label').forEach(label => {
+                                    label.innerHTML = label.getAttribute('data-original-text');
+                                });
+                            } else {
+                                throw new Error(data.error || 'Unknown error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            document.getElementById('loadingSpinner').style.display = 'none';
+                            document.getElementById('submitBtn').disabled = false;
+                            document.getElementById('errorAlert').style.display = 'block';
+                            document.getElementById('successAlert').style.display = 'none';
+                        });
+                    });
+            });
+        });
+    </script>
+</body>
+</html>

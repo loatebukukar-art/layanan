@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Kelurahan Loa Tebu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .admin-header {
+            background: var(--bg-primary);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .admin-details h5 {
+            margin: 0;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .admin-details p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .admin-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            color: white;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.025em;
+        }
+
+        .btn-logout:hover {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-back {
+            background: var(--bg-secondary);
+            border: 2px solid #e2e8f0;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-back:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .auth-modal {
+            background: var(--bg-primary);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .auth-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .auth-title {
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-message {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .btn-auth {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            color: white;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-auth:hover {
+            background: linear-gradient(135deg, var(--primary-dark), #1e40af);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem;
+            }
+
+            .admin-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .admin-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-logout,
+            .btn-back {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        .admin-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .admin-title {
+            color: #667eea;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .table-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            border: none;
+        }
+        .table td {
+            vertical-align: middle;
+            border-color: #e9ecef;
+        }
+        .btn-download {
+            background-color: #198754;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+        .btn-download:hover {
+            background-color: #157347;
+            color: white;
+        }
+        .btn-action {
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            margin: 2px;
+        }
+        .btn-view {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+        }
+        .btn-view:hover {
+            background-color: #0b5ed7;
+            color: white;
+        }
+        .btn-edit {
+            background-color: #ffc107;
+            color: #000;
+            border: none;
+        }
+        .btn-edit:hover {
+            background-color: #ffca2c;
+            color: #000;
+        }
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .status-menunggu {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .status-diproses {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        .status-selesai {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-ditolak {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .status-verifikasidokumen {
+            background-color: #cff4fc;
+            color: #055160;
+        }
+        .status-prosesadministrasi {
+            background-color: #e2e3e5;
+            color: #383d41;
+        }
+        .progress-bar-custom {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #e9ecef;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .progress-text {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 2px;
+        }
+        .timeline-preview {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .timeline-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .timeline-step.completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .timeline-step.current {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .timeline-step.pending {
+            background-color: #f8f9fa;
+            color: #6c757d;
+        }
+        .timeline-step-icon {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+        .modal-lg {
+            max-width: 800px;
+        }
+        .form-control:read-only {
+            background-color: #f8f9fa;
+            border-color: #e9ecef;
+        }
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .stats-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .stats-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+        .search-box {
+            margin-bottom: 20px;
+        }
+        .filter-buttons {
+            margin-bottom: 20px;
+        }
+        .filter-btn {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .pagination {
+            justify-content: center;
+        }
+        .nav-tabs .nav-link {
+            border-radius: 10px 10px 0 0;
+            border: none;
+            color: #6c757d;
+        }
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+        .modal-body {
+            padding: 2rem;
+        }
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark hero-gradient shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-house-door me-2"></i>Kelurahan Loa Tebu
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="admin.html">Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid py-4">
+        <!-- Admin Header -->
+        <div class="admin-header" id="adminHeader" style="display: none;">
+            <div class="admin-info">
+                <div class="admin-avatar" id="adminAvatar">
+                    <i class="bi bi-person"></i>
+                </div>
+                <div class="admin-details">
+                    <h5 id="adminName">Admin Kelurahan</h5>
+                    <p id="adminRole">Administrator</p>
+                </div>
+            </div>
+            <div class="admin-actions">
+                <a href="index.html" class="btn-back">
+                    <i class="bi bi-house me-1"></i>
+                    Beranda
+                </a>
+                <button class="btn-logout" id="logoutBtn">
+                    <i class="bi bi-box-arrow-right me-1"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Auth Overlay -->
+        <div class="auth-overlay" id="authOverlay">
+            <div class="auth-modal">
+                <div class="auth-icon">
+                    <i class="bi bi-shield-exclamation"></i>
+                </div>
+                <h3 class="auth-title">Akses Terbatas</h3>
+                <p class="auth-message">
+                    Halaman ini hanya dapat diakses oleh admin kelurahan yang telah terdaftar.
+                    Silakan login untuk melanjutkan.
+                </p>
+                <a href="admin-login.html" class="btn-auth">
+                    <i class="bi bi-box-arrow-in-right me-1"></i>
+                    Login Admin
+                </a>
+            </div>
+        </div>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-4">
+        <div class="container text-center">
+            <h1 class="display-5 fw-bold mb-3">
+                <i class="bi bi-shield-check me-3"></i>Admin Panel
+            </h1>
+            <p class="lead">Kelola pengajuan surat dan aduan masyarakat</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="admin-container">
+                <!-- Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stats-number" id="totalSurat">0</div>
+                            <div class="stats-label">Total Pengajuan Surat</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stats-number" id="totalAduan">0</div>
+                            <div class="stats-label">Total Aduan</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stats-number" id="menungguAduan">0</div>
+                            <div class="stats-label">Aduan Menunggu</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stats-number" id="selesaiAduan">0</div>
+                            <div class="stats-label">Aduan Selesai</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="surat-tab" data-bs-toggle="tab" data-bs-target="#surat" type="button" role="tab">
+                            <i class="bi bi-file-text me-2"></i>Pengajuan Surat
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tracking-tab" data-bs-toggle="tab" data-bs-target="#tracking" type="button" role="tab">
+                            <i class="bi bi-search me-2"></i>Tracking Surat
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="aduan-tab" data-bs-toggle="tab" data-bs-target="#aduan" type="button" role="tab">
+                            <i class="bi bi-chat-dots me-2"></i>Kotak Aduan
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="adminTabsContent">
+                    <!-- Pengajuan Surat Tab -->
+                    <div class="tab-pane fade show active" id="surat" role="tabpanel">
+                        <!-- Controls -->
+                        <div class="row mb-4 mt-4">
+                            <div class="col-md-6">
+                                <div class="search-box">
+                                    <input type="text" class="form-control" id="searchSurat" placeholder="Cari pengajuan surat...">
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <button class="btn btn-primary" id="refreshSurat">
+                                    <i class="bi bi-arrow-clockwise me-2"></i>Refresh Data
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Table -->
+                        <div class="table-container">
+                            <table class="table table-hover mb-0" id="suratTable">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Timestamp</th>
+                                        <th>Nama Lengkap</th>
+                                        <th>NIK</th>
+                                        <th>Jenis Surat</th>
+                                        <th>Kasi Tujuan</th>
+                                        <th>Tanggal Pengajuan</th>
+                                        <th>Status</th>
+                                        <th>KTP</th>
+                                        <th>KK</th>
+                                        <th>Surat RT</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="suratTableBody">
+                                    <tr>
+                                        <td colspan="12" class="loading">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                            <p class="mt-2">Memuat data pengajuan surat...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation" class="mt-4">
+                            <ul class="pagination justify-content-center" id="suratPagination">
+                                <!-- Pagination will be generated by JavaScript -->
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <!-- Tracking Surat Tab -->
+                    <div class="tab-pane fade" id="tracking" role="tabpanel">
+                        <!-- Controls -->
+                        <div class="row mb-4 mt-4">
+                            <div class="col-md-6">
+                                <div class="search-box">
+                                    <input type="text" class="form-control" id="searchTracking" placeholder="Cari berdasarkan NIK atau nama...">
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <button class="btn btn-primary" id="refreshTracking">
+                                    <i class="bi bi-arrow-clockwise me-2"></i>Refresh Data
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Filter Buttons -->
+                        <div class="filter-buttons">
+                            <button class="btn btn-outline-primary filter-btn active" data-filter="all">Semua Status</button>
+                            <button class="btn btn-outline-warning filter-btn" data-filter="Menunggu">Menunggu</button>
+                            <button class="btn btn-outline-info filter-btn" data-filter="Verifikasi Dokumen">Verifikasi Dokumen</button>
+                            <button class="btn btn-outline-secondary filter-btn" data-filter="Proses Administrasi">Proses Administrasi</button>
+                            <button class="btn btn-outline-success filter-btn" data-filter="Selesai">Selesai</button>
+                        </div>
+
+                        <!-- Table -->
+                        <div class="table-container">
+                            <table class="table table-hover mb-0" id="trackingTable">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NIK</th>
+                                        <th>Nama Lengkap</th>
+                                        <th>Jenis Surat</th>
+                                        <th>Tanggal Pengajuan</th>
+                                        <th>Status</th>
+                                        <th>Progress</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="trackingTableBody">
+                                    <tr>
+                                        <td colspan="8" class="loading">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                            <p class="mt-2">Memuat data tracking...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation" class="mt-4">
+                            <ul class="pagination justify-content-center" id="trackingPagination">
+                                <!-- Pagination will be generated by JavaScript -->
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <!-- Kotak Aduan Tab -->
+                    <div class="tab-pane fade" id="aduan" role="tabpanel">
+                        <!-- Controls -->
+                        <div class="row mb-4 mt-4">
+                            <div class="col-md-6">
+                                <div class="search-box">
+                                    <input type="text" class="form-control" id="searchAduan" placeholder="Cari aduan...">
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <button class="btn btn-primary" id="refreshAduan">
+                                    <i class="bi bi-arrow-clockwise me-2"></i>Refresh Data
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Filter Buttons -->
+                        <div class="filter-buttons">
+                            <button class="btn btn-outline-primary filter-btn active" data-filter="all">Semua</button>
+                            <button class="btn btn-outline-warning filter-btn" data-filter="Menunggu">Menunggu</button>
+                            <button class="btn btn-outline-info filter-btn" data-filter="Diproses">Diproses</button>
+                            <button class="btn btn-outline-success filter-btn" data-filter="Selesai">Selesai</button>
+                            <button class="btn btn-outline-danger filter-btn" data-filter="Ditolak">Ditolak</button>
+                        </div>
+
+                        <!-- Table -->
+                        <div class="table-container">
+                            <table class="table table-hover mb-0" id="aduanTable">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nomor Aduan</th>
+                                        <th>Tanggal</th>
+                                        <th>Nama</th>
+                                        <th>Jenis Aduan</th>
+                                        <th>Judul</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="aduanTableBody">
+                                    <tr>
+                                        <td colspan="8" class="loading">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                            <p class="mt-2">Memuat data aduan...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation" class="mt-4">
+                            <ul class="pagination justify-content-center" id="aduanPagination">
+                                <!-- Pagination will be generated by JavaScript -->
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Edit Status Surat -->
+    <div class="modal fade" id="editSuratModal" tabindex="-1" aria-labelledby="editSuratModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editSuratModalLabel">
+                        <i class="bi bi-pencil-square me-2"></i>Edit Status Permohonan Surat
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editSuratForm">
+                        <input type="hidden" id="editSuratNIK" name="nik">
+                        
+                        <!-- Informasi Pengaju -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="editSuratNama" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">NIK</label>
+                                <input type="text" class="form-control" id="editSuratNIKDisplay" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Jenis Surat</label>
+                                <input type="text" class="form-control" id="editSuratJenis" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Tanggal Pengajuan</label>
+                                <input type="text" class="form-control" id="editSuratTanggal" readonly>
+                            </div>
+                        </div>
+                        
+                        <!-- Status Selection -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Status Saat Ini</label>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <span class="status-badge" id="currentStatusBadge">-</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Ubah Status Ke</label>
+                            <select class="form-select" id="editSuratStatus" name="status" required>
+                                <option value="">Pilih Status Baru</option>
+                                <option value="Menunggu">Menunggu</option>
+                                <option value="Verifikasi Dokumen">Verifikasi Dokumen</option>
+                                <option value="Proses Administrasi">Proses Administrasi</option>
+                                <option value="Selesai">Selesai</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Catatan Admin -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Catatan Admin</label>
+                            <textarea class="form-control" id="editSuratCatatan" name="catatan" rows="3" placeholder="Tambahkan catatan untuk perubahan status ini..."></textarea>
+                        </div>
+                        
+                        <!-- Petugas Penanggung Jawab -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Petugas Penanggung Jawab</label>
+                            <input type="text" class="form-control" id="editSuratPetugas" name="petugas" placeholder="Nama petugas yang menangani" required>
+                        </div>
+                        
+                        <!-- Timeline Preview -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Timeline Progress</label>
+                            <div class="timeline-preview" id="timelinePreview">
+                                <!-- Timeline will be generated here -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-2"></i>Batal
+                    </button>
+                    <button type="button" class="btn btn-primary" id="saveSuratStatus">
+                        <i class="bi bi-check-circle me-2"></i>Simpan Perubahan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Status Tracking -->
+    <div class="modal fade" id="editTrackingModal" tabindex="-1" aria-labelledby="editTrackingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editTrackingModalLabel">
+                        <i class="bi bi-search me-2"></i>Update Status Tracking
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editTrackingForm">
+                        <input type="hidden" id="editTrackingNIK" name="nik">
+                        
+                        <!-- Informasi Pengaju -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="editTrackingNama" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">NIK</label>
+                                <input type="text" class="form-control" id="editTrackingNIKDisplay" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Jenis Surat</label>
+                                <input type="text" class="form-control" id="editTrackingJenis" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Tanggal Pengajuan</label>
+                                <input type="text" class="form-control" id="editTrackingTanggal" readonly>
+                            </div>
+                        </div>
+                        
+                        <!-- Current Progress -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Progress Saat Ini</label>
+                            <div class="progress-bar-custom mb-2">
+                                <div class="progress-fill" id="currentProgressBar"></div>
+                            </div>
+                            <div class="progress-text" id="currentProgressText">-</div>
+                        </div>
+                        
+                        <!-- Status Selection -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Status Saat Ini</label>
+                            <span class="status-badge" id="currentTrackingStatusBadge">-</span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Ubah Status Ke</label>
+                            <select class="form-select" id="editTrackingStatus" name="status" required>
+                                <option value="">Pilih Status Baru</option>
+                                <option value="Menunggu">Menunggu</option>
+                                <option value="Verifikasi Dokumen">Verifikasi Dokumen</option>
+                                <option value="Proses Administrasi">Proses Administrasi</option>
+                                <option value="Selesai">Selesai</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Catatan Admin -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Catatan Admin</label>
+                            <textarea class="form-control" id="editTrackingCatatan" name="catatan" rows="3" placeholder="Tambahkan catatan untuk perubahan status ini..."></textarea>
+                        </div>
+                        
+                        <!-- Petugas Penanggung Jawab -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Petugas Penanggung Jawab</label>
+                            <input type="text" class="form-control" id="editTrackingPetugas" name="petugas" placeholder="Nama petugas yang menangani" required>
+                        </div>
+                        
+                        <!-- Preview Progress -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Preview Progress Baru</label>
+                            <div class="progress-bar-custom mb-2">
+                                <div class="progress-fill" id="previewProgressBar"></div>
+                            </div>
+                            <div class="progress-text" id="previewProgressText">-</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-2"></i>Batal
+                    </button>
+                    <button type="button" class="btn btn-primary" id="saveTrackingStatus">
+                        <i class="bi bi-check-circle me-2"></i>Update Status
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="hero-gradient text-white py-4 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h5 class="fw-bold mb-2">
+                        <i class="bi bi-building me-2"></i>Kelurahan Loa Tebu
+                    </h5>
+                    <p class="mb-0">Kecamatan Tenggarong, Kabupaten Kutai Kartanegara</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">&copy; 2025 Kelurahan Loa Tebu. Admin panel.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Konfigurasi Autentikasi
+        const AUTH_CONFIG = {
+            // Ganti dengan URL Web App Google Apps Script untuk autentikasi
+            AUTH_URL: 'https://script.google.com/macros/s/AKfycbxSIdAZv65KAGIU_-6mblEpaK4YjRtUOfRfVbNkNyUUEqjoKumx_IaNq8XimmfTu8JP/exec',
+            TIMEOUT: 10000,
+            
+            // Mode development untuk testing lokal
+            DEVELOPMENT_MODE: true,
+            
+            // Data admin untuk testing lokal
+            TEST_ADMINS: [
+                { username: 'admin_kelurahan', password: 'admin123', nama: 'Admin Kelurahan', role: 'admin' },
+                { username: 'kepala_kelurahan', password: 'kepala123', nama: 'Kepala Kelurahan', role: 'admin' },
+                { username: 'sekretaris', password: 'sekret123', nama: 'Sekretaris Kelurahan', role: 'admin' },
+                { username: 'staff_admin', password: 'staff123', nama: 'Staff Admin', role: 'admin' }
+            ]
+        };
+
+        // URLs untuk kedua sistem - GANTI DENGAN URL GOOGLE APPS SCRIPT ANDA
+        const suratScriptURL = 'https://script.google.com/macros/s/AKfycbzQnULk2687fxw-TaECPWpmrbzAgad2wNRzyNsdef44qPcg-Eh3PfBiijj3noPtIhkV/exec';
+        const aduanScriptURL = 'https://script.google.com/macros/s/AKfycbznqG5HRdGirLlaoBfuuHEwkwjXx8q19SfowOZ-lZ9x0DyCYbGro_TM4p_IZX-HJPbi/exec';
+
+        // Sistem Autentikasi
+        class AuthManager {
+            constructor() {
+                this.token = localStorage.getItem('adminToken');
+                this.user = JSON.parse(localStorage.getItem('adminUser') || 'null');
+                this.init();
+            }
+
+            init() {
+                this.checkAuth();
+                this.setupEventListeners();
+            }
+
+            async checkAuth() {
+                if (!this.token || !this.user) {
+                    this.showAuthOverlay();
+                    return false;
+                }
+
+                try {
+                    const isValid = await this.verifyToken();
+                    if (isValid) {
+                        this.showAdminContent();
+                        return true;
+                    } else {
+                        this.logout();
+                        this.showAuthOverlay();
+                        return false;
+                    }
+                } catch (error) {
+                    console.error('Auth check error:', error);
+                    this.logout();
+                    this.showAuthOverlay();
+                    return false;
+                }
+            }
+
+            async verifyToken() {
+                // Jika dalam mode development, gunakan verifikasi lokal
+                if (AUTH_CONFIG.DEVELOPMENT_MODE) {
+                    console.log('Development mode: Menggunakan verifikasi token lokal');
+                    return this.verifyTokenLocally();
+                }
+
+                try {
+                    const response = await fetch(AUTH_CONFIG.AUTH_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'verify',
+                            token: this.token
+                        }),
+                        timeout: AUTH_CONFIG.TIMEOUT
+                    });
+
+                    const data = await response.json();
+                    return data.success;
+                } catch (error) {
+                    console.error('Token verification error:', error);
+                    console.log('Mencoba verifikasi lokal...');
+                    return this.verifyTokenLocally();
+                }
+            }
+
+            verifyTokenLocally() {
+                try {
+                    const tokenData = JSON.parse(atob(this.token));
+                    const now = Date.now();
+                    
+                    // Cek apakah token expired
+                    if (tokenData.exp && tokenData.exp < now) {
+                        console.log('Token expired');
+                        return false;
+                    }
+                    
+                    // Cek apakah user ada di data test
+                    const admin = AUTH_CONFIG.TEST_ADMINS.find(a => a.username === tokenData.username);
+                    return !!admin;
+                } catch (error) {
+                    console.error('Local token verification error:', error);
+                    return false;
+                }
+            }
+
+            showAuthOverlay() {
+                document.getElementById('authOverlay').style.display = 'flex';
+                document.getElementById('adminHeader').style.display = 'none';
+                // Hide main content
+                const mainContent = document.querySelector('.admin-container');
+                if (mainContent) {
+                    mainContent.style.display = 'none';
+                }
+            }
+
+            showAdminContent() {
+                document.getElementById('authOverlay').style.display = 'none';
+                document.getElementById('adminHeader').style.display = 'flex';
+                // Show main content
+                const mainContent = document.querySelector('.admin-container');
+                if (mainContent) {
+                    mainContent.style.display = 'block';
+                }
+
+                // Update admin info
+                if (this.user) {
+                    document.getElementById('adminName').textContent = this.user.nama || this.user.username;
+                    document.getElementById('adminRole').textContent = this.user.role || 'Administrator';
+                    
+                    // Update avatar with first letter of name
+                    const avatar = document.getElementById('adminAvatar');
+                    const firstLetter = (this.user.nama || this.user.username).charAt(0).toUpperCase();
+                    avatar.innerHTML = firstLetter;
+                }
+            }
+
+            async logout() {
+                try {
+                    if (this.token) {
+                        await fetch(AUTH_CONFIG.AUTH_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                action: 'logout',
+                                token: this.token
+                            })
+                        });
+                    }
+                } catch (error) {
+                    console.error('Logout error:', error);
+                } finally {
+                    localStorage.removeItem('adminToken');
+                    localStorage.removeItem('adminUser');
+                    this.token = null;
+                    this.user = null;
+                    window.location.href = 'admin-login.html';
+                }
+            }
+
+            setupEventListeners() {
+                document.getElementById('logoutBtn').addEventListener('click', () => {
+                    if (confirm('Apakah Anda yakin ingin logout?')) {
+                        this.logout();
+                    }
+                });
+            }
+        }
+
+        // Initialize authentication
+        const authManager = new AuthManager();
+        
+        // Fallback data untuk testing (hapus setelah URL Apps Script benar)
+        const fallbackSuratData = [
+            {
+                'Timestamp': '2025-01-27T10:30:00.000Z',
+                'Nama Lengkap': 'John Doe',
+                'NIK': '1234567890123456',
+                'Jenis Surat': 'Surat Keterangan',
+                'Kasi Tujuan': 'Kasi Pemerintahan',
+                'Tanggal Pengajuan': '2025-01-27',
+                'Link KTP': '',
+                'Link KK': '',
+                'Link Surat RT': ''
+            },
+            {
+                'Timestamp': '2025-01-26T14:15:00.000Z',
+                'Nama Lengkap': 'Jane Smith',
+                'NIK': '9876543210987654',
+                'Jenis Surat': 'Surat Domisili',
+                'Kasi Tujuan': 'Kasi Kesejahteraan',
+                'Tanggal Pengajuan': '2025-01-26',
+                'Link KTP': '',
+                'Link KK': '',
+                'Link Surat RT': ''
+            }
+        ];
+        
+        const fallbackAduanData = [
+            {
+                'Nomor Aduan': 'ADU-2025-001',
+                'Nama Lengkap': 'Budi Santoso',
+                'Jenis Aduan': 'Infrastruktur',
+                'Judul Aduan': 'Jalan Rusak',
+                'Status': 'Menunggu',
+                'Tanggal Pengaduan': '2025-01-27'
+            }
+        ];
+        
+        // Data storage
+        let suratData = [];
+        let aduanData = [];
+        let filteredSuratData = [];
+        let filteredAduanData = [];
+        let filteredTrackingData = [];
+        
+        // Pagination
+        let currentSuratPage = 1;
+        let currentAduanPage = 1;
+        let currentTrackingPage = 1;
+        const rowsPerPage = 10;
+        let currentAduanFilter = 'all';
+        let currentTrackingFilter = 'all';
+        
+        // Load data saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchSuratData();
+            fetchAduanData();
+            setupEventListeners();
+        });
+        
+        function setupEventListeners() {
+            // Surat search
+            document.getElementById('searchSurat').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                filterSuratData(searchTerm);
+            });
+            
+            // Tracking search
+            document.getElementById('searchTracking').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                filterTrackingData(searchTerm, currentTrackingFilter);
+            });
+            
+            // Aduan search
+            document.getElementById('searchAduan').addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                filterAduanData(searchTerm, currentAduanFilter);
+            });
+            
+            // Filter buttons for tracking
+            document.querySelectorAll('#tracking .filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('#tracking .filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    currentTrackingFilter = this.getAttribute('data-filter');
+                    const searchTerm = document.getElementById('searchTracking').value.toLowerCase();
+                    filterTrackingData(searchTerm, currentTrackingFilter);
+                });
+            });
+            
+            // Filter buttons for aduan
+            document.querySelectorAll('#aduan .filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('#aduan .filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    currentAduanFilter = this.getAttribute('data-filter');
+                    const searchTerm = document.getElementById('searchAduan').value.toLowerCase();
+                    filterAduanData(searchTerm, currentAduanFilter);
+                });
+            });
+            
+            // Refresh buttons
+            document.getElementById('refreshSurat').addEventListener('click', fetchSuratData);
+            document.getElementById('refreshTracking').addEventListener('click', fetchTrackingData);
+            document.getElementById('refreshAduan').addEventListener('click', fetchAduanData);
+            
+            // Setup modal event listeners
+            setupModalEventListeners();
+        }
+        
+        // Fetch surat data
+        function fetchSuratData() {
+            document.getElementById('suratTableBody').innerHTML = `
+                <tr>
+                    <td colspan="10" class="loading">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Memuat data pengajuan surat...</p>
+                    </td>
+                </tr>
+            `;
+            
+            // Check if URL is placeholder
+            if (suratScriptURL.includes('YOUR_SURAT_SCRIPT_ID')) {
+                console.log('Using fallback data - Please update Google Apps Script URL');
+                setTimeout(() => {
+                    suratData = fallbackSuratData;
+                    filteredSuratData = [...suratData];
+                    filteredTrackingData = [...suratData];
+                    updateStats();
+                    displaySuratData();
+                    setupSuratPagination();
+                    displayTrackingData();
+                    setupTrackingPagination();
+                }, 1000);
+                return;
+            }
+            
+            fetch(suratScriptURL)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text(); // Get as text first
+                })
+                .then(text => {
+                    // Check if response is HTML (error page)
+                    if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+                        throw new Error('Received HTML instead of JSON - Check Google Apps Script URL');
+                    }
+                    
+                    // Try to parse as JSON
+                    const data = JSON.parse(text);
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    
+                    suratData = data;
+                    filteredSuratData = [...suratData];
+                    filteredTrackingData = [...suratData];
+                    updateStats();
+                    displaySuratData();
+                    setupSuratPagination();
+                    displayTrackingData();
+                    setupTrackingPagination();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    console.log('Using fallback data due to error');
+                    
+                    // Use fallback data
+                    suratData = fallbackSuratData;
+                    filteredSuratData = [...suratData];
+                    filteredTrackingData = [...suratData];
+                    updateStats();
+                    displaySuratData();
+                    setupSuratPagination();
+                    displayTrackingData();
+                    setupTrackingPagination();
+                    
+                    // Show warning message
+                    document.getElementById('suratTableBody').innerHTML = `
+                        <tr>
+                            <td colspan="12" class="text-center text-warning">
+                                <i class="bi bi-exclamation-triangle-fill"></i> 
+                                Menggunakan data demo. Silakan update URL Google Apps Script untuk data real.
+                                <br><small>Error: ${error.message}</small>
+                            </td>
+                        </tr>
+                    `;
+                });
+        }
+        
+        // Fetch tracking data (same as surat data but with different display)
+        function fetchTrackingData() {
+            document.getElementById('trackingTableBody').innerHTML = `
+                <tr>
+                    <td colspan="8" class="loading">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Memuat data tracking...</p>
+                    </td>
+                </tr>
+            `;
+            
+            fetch(suratScriptURL)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    
+                    filteredTrackingData = [...data];
+                    displayTrackingData();
+                    setupTrackingPagination();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('trackingTableBody').innerHTML = `
+                        <tr>
+                            <td colspan="8" class="text-center text-danger">
+                                <i class="bi bi-exclamation-triangle-fill"></i> Gagal memuat data: ${error.message}
+                            </td>
+                        </tr>
+                    `;
+                });
+        }
+        
+        // Fetch aduan data
+        function fetchAduanData() {
+            document.getElementById('aduanTableBody').innerHTML = `
+                <tr>
+                    <td colspan="8" class="loading">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Memuat data aduan...</p>
+                    </td>
+                </tr>
+            `;
+            
+            // Check if URL is placeholder
+            if (aduanScriptURL.includes('YOUR_ADUAN_SCRIPT_ID')) {
+                console.log('Using fallback aduan data - Please update Google Apps Script URL');
+                setTimeout(() => {
+                    aduanData = fallbackAduanData;
+                    filteredAduanData = [...aduanData];
+                    updateStats();
+                    displayAduanData();
+                    setupAduanPagination();
+                }, 1000);
+                return;
+            }
+            
+            fetch(aduanScriptURL)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+                        throw new Error('Received HTML instead of JSON - Check Google Apps Script URL');
+                    }
+                    
+                    const data = JSON.parse(text);
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    
+                    aduanData = data;
+                    filteredAduanData = [...aduanData];
+                    updateStats();
+                    displayAduanData();
+                    setupAduanPagination();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    console.log('Using fallback aduan data due to error');
+                    
+                    aduanData = fallbackAduanData;
+                    filteredAduanData = [...aduanData];
+                    updateStats();
+                    displayAduanData();
+                    setupAduanPagination();
+                    
+                    document.getElementById('aduanTableBody').innerHTML = `
+                        <tr>
+                            <td colspan="8" class="text-center text-warning">
+                                <i class="bi bi-exclamation-triangle-fill"></i> 
+                                Menggunakan data demo aduan. Silakan update URL Google Apps Script untuk data real.
+                                <br><small>Error: ${error.message}</small>
+                            </td>
+                        </tr>
+                    `;
+                });
+        }
+        
+        // Get status from spreadsheet data or generate default
+        function generateStatus(item) {
+            // Jika ada kolom Status di spreadsheet, gunakan itu
+            if (item.Status && item.Status.trim() !== '') {
+                return item.Status;
+            }
+            
+            // Jika tidak ada, generate berdasarkan timestamp (fallback)
+            const now = new Date();
+            const timestamp = new Date(item.Timestamp);
+            const daysDiff = Math.floor((now - timestamp) / (1000 * 60 * 60 * 24));
+            
+            // Default status progression based on days
+            if (daysDiff < 1) return 'Menunggu';
+            if (daysDiff < 3) return 'Verifikasi Dokumen';
+            if (daysDiff < 7) return 'Proses Administrasi';
+            return 'Selesai';
+        }
+        
+        // Generate progress percentage based on status
+        function generateProgress(status) {
+            switch(status) {
+                case 'Menunggu': return 25;
+                case 'Verifikasi Dokumen': return 50;
+                case 'Proses Administrasi': return 75;
+                case 'Selesai': return 100;
+                default: return 25;
+            }
+        }
+        
+        // Update statistics
+        function updateStats() {
+            document.getElementById('totalSurat').textContent = suratData.length;
+            document.getElementById('totalAduan').textContent = aduanData.length;
+            document.getElementById('menungguAduan').textContent = aduanData.filter(item => item.Status === 'Menunggu').length;
+            document.getElementById('selesaiAduan').textContent = aduanData.filter(item => item.Status === 'Selesai').length;
+        }
+        
+        // Filter surat data
+        function filterSuratData(searchTerm) {
+            filteredSuratData = suratData.filter(item => {
+                return !searchTerm || 
+                    item['Nama Lengkap'].toLowerCase().includes(searchTerm) ||
+                    item['NIK'].toLowerCase().includes(searchTerm) ||
+                    item['Jenis Surat'].toLowerCase().includes(searchTerm) ||
+                    item['Kasi Tujuan'].toLowerCase().includes(searchTerm);
+            });
+            
+            currentSuratPage = 1;
+            displaySuratData();
+            setupSuratPagination();
+        }
+        
+        // Filter tracking data
+        function filterTrackingData(searchTerm, statusFilter) {
+            filteredTrackingData = suratData.filter(item => {
+                const status = generateStatus(item);
+                const matchesSearch = !searchTerm || 
+                    item['Nama Lengkap'].toLowerCase().includes(searchTerm) ||
+                    item.NIK.toLowerCase().includes(searchTerm) ||
+                    item['Jenis Surat'].toLowerCase().includes(searchTerm);
+                
+                const matchesFilter = statusFilter === 'all' || status === statusFilter;
+                
+                return matchesSearch && matchesFilter;
+            });
+            
+            currentTrackingPage = 1;
+            displayTrackingData();
+            setupTrackingPagination();
+        }
+        
+        // Filter aduan data
+        function filterAduanData(searchTerm, statusFilter) {
+            filteredAduanData = aduanData.filter(item => {
+                const matchesSearch = !searchTerm || 
+                    item['Nomor Aduan'].toLowerCase().includes(searchTerm) ||
+                    item['Nama Lengkap'].toLowerCase().includes(searchTerm) ||
+                    item['Jenis Aduan'].toLowerCase().includes(searchTerm) ||
+                    item['Judul Aduan'].toLowerCase().includes(searchTerm);
+                
+                const matchesFilter = statusFilter === 'all' || item.Status === statusFilter;
+                
+                return matchesSearch && matchesFilter;
+            });
+            
+            currentAduanPage = 1;
+            displayAduanData();
+            setupAduanPagination();
+        }
+        
+        // Display surat data
+        function displaySuratData() {
+            const tableBody = document.getElementById('suratTableBody');
+            const startIndex = (currentSuratPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+            const paginatedData = filteredSuratData.slice(startIndex, endIndex);
+            
+            if (paginatedData.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="12" class="text-center">Tidak ada data pengajuan surat</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tableBody.innerHTML = '';
+            
+            paginatedData.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                
+                const timestamp = item.Timestamp ? new Date(item.Timestamp).toLocaleString('id-ID') : '-';
+                const tanggalPengajuan = item['Tanggal Pengajuan'] || '-';
+                const status = generateStatus(item);
+                const statusClass = `status-${status.toLowerCase().replace(' ', '')}`;
+                
+                tr.innerHTML = `
+                    <td>${startIndex + index + 1}</td>
+                    <td>${timestamp}</td>
+                    <td>${item['Nama Lengkap'] || '-'}</td>
+                    <td>${item.NIK || '-'}</td>
+                    <td>${item['Jenis Surat'] || '-'}</td>
+                    <td>${item['Kasi Tujuan'] || '-'}</td>
+                    <td>${tanggalPengajuan}</td>
+                    <td><span class="status-badge ${statusClass}">${status}</span></td>
+                    <td>
+                        ${item['Link KTP'] ? `<a href="${item['Link KTP']}" target="_blank" class="btn btn-download btn-sm"><i class="bi bi-download"></i></a>` : '-'}
+                    </td>
+                    <td>
+                        ${item['Link KK'] ? `<a href="${item['Link KK']}" target="_blank" class="btn btn-download btn-sm"><i class="bi bi-download"></i></a>` : '-'}
+                    </td>
+                    <td>
+                        ${item['Link Surat RT'] ? `<a href="${item['Link Surat RT']}" target="_blank" class="btn btn-download btn-sm"><i class="bi bi-download"></i></a>` : '-'}
+                    </td>
+                    <td>
+                        <button class="btn btn-action btn-view" onclick="viewSurat('${item.NIK}')" title="Lihat Detail">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-action btn-edit" onclick="editSurat('${item.NIK}')" title="Edit Status">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(tr);
+            });
+        }
+        
+        // Display tracking data
+        function displayTrackingData() {
+            const tableBody = document.getElementById('trackingTableBody');
+            const startIndex = (currentTrackingPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+            const paginatedData = filteredTrackingData.slice(startIndex, endIndex);
+            
+            if (paginatedData.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center">Tidak ada data tracking</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tableBody.innerHTML = '';
+            
+            paginatedData.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                
+                const tanggalPengajuan = item['Tanggal Pengajuan'] || '-';
+                const status = generateStatus(item);
+                const statusClass = `status-${status.toLowerCase().replace(' ', '')}`;
+                const progress = generateProgress(status);
+                
+                tr.innerHTML = `
+                    <td>${startIndex + index + 1}</td>
+                    <td><strong>${item.NIK || '-'}</strong></td>
+                    <td>${item['Nama Lengkap'] || '-'}</td>
+                    <td>${item['Jenis Surat'] || '-'}</td>
+                    <td>${tanggalPengajuan}</td>
+                    <td><span class="status-badge ${statusClass}">${status}</span></td>
+                    <td>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" style="width: ${progress}%"></div>
+                        </div>
+                        <div class="progress-text">${progress}%</div>
+                    </td>
+                    <td>
+                        <button class="btn btn-action btn-view" onclick="viewTracking('${item.NIK}')" title="Lihat Detail">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-action btn-edit" onclick="editTracking('${item.NIK}')" title="Update Status">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(tr);
+            });
+        }
+        
+        // Display aduan data
+        function displayAduanData() {
+            const tableBody = document.getElementById('aduanTableBody');
+            const startIndex = (currentAduanPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+            const paginatedData = filteredAduanData.slice(startIndex, endIndex);
+            
+            if (paginatedData.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center">Tidak ada data aduan</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tableBody.innerHTML = '';
+            
+            paginatedData.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                
+                const tanggal = item['Tanggal Pengaduan'] ? 
+                    new Date(item['Tanggal Pengaduan']).toLocaleDateString('id-ID') : '-';
+                
+                const statusClass = `status-${item.Status.toLowerCase().replace(' ', '')}`;
+                const statusBadge = `<span class="status-badge ${statusClass}">${item.Status}</span>`;
+                
+                tr.innerHTML = `
+                    <td>${startIndex + index + 1}</td>
+                    <td><strong>${item['Nomor Aduan'] || '-'}</strong></td>
+                    <td>${tanggal}</td>
+                    <td>${item['Nama Lengkap'] || '-'}</td>
+                    <td>${item['Jenis Aduan'] || '-'}</td>
+                    <td>${item['Judul Aduan'] || '-'}</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <button class="btn btn-action btn-view" onclick="viewAduan('${item['Nomor Aduan']}')" title="Lihat Detail">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-action btn-edit" onclick="editAduan('${item['Nomor Aduan']}')" title="Edit Status">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(tr);
+            });
+        }
+        
+        // Setup surat pagination
+        function setupSuratPagination() {
+            const pagination = document.getElementById('suratPagination');
+            const totalPages = Math.ceil(filteredSuratData.length / rowsPerPage);
+            
+            pagination.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            // Previous button
+            const prevLi = document.createElement('li');
+            prevLi.className = `page-item ${currentSuratPage === 1 ? 'disabled' : ''}`;
+            prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>`;
+            prevLi.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentSuratPage > 1) {
+                    currentSuratPage--;
+                    displaySuratData();
+                    setupSuratPagination();
+                }
+            });
+            pagination.appendChild(prevLi);
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                const li = document.createElement('li');
+                li.className = `page-item ${i === currentSuratPage ? 'active' : ''}`;
+                li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                li.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    currentSuratPage = i;
+                    displaySuratData();
+                    setupSuratPagination();
+                });
+                pagination.appendChild(li);
+            }
+            
+            // Next button
+            const nextLi = document.createElement('li');
+            nextLi.className = `page-item ${currentSuratPage === totalPages ? 'disabled' : ''}`;
+            nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>`;
+            nextLi.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentSuratPage < totalPages) {
+                    currentSuratPage++;
+                    displaySuratData();
+                    setupSuratPagination();
+                }
+            });
+            pagination.appendChild(nextLi);
+        }
+        
+        // Setup tracking pagination
+        function setupTrackingPagination() {
+            const pagination = document.getElementById('trackingPagination');
+            const totalPages = Math.ceil(filteredTrackingData.length / rowsPerPage);
+            
+            pagination.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            // Previous button
+            const prevLi = document.createElement('li');
+            prevLi.className = `page-item ${currentTrackingPage === 1 ? 'disabled' : ''}`;
+            prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>`;
+            prevLi.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentTrackingPage > 1) {
+                    currentTrackingPage--;
+                    displayTrackingData();
+                    setupTrackingPagination();
+                }
+            });
+            pagination.appendChild(prevLi);
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                const li = document.createElement('li');
+                li.className = `page-item ${i === currentTrackingPage ? 'active' : ''}`;
+                li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                li.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    currentTrackingPage = i;
+                    displayTrackingData();
+                    setupTrackingPagination();
+                });
+                pagination.appendChild(li);
+            }
+            
+            // Next button
+            const nextLi = document.createElement('li');
+            nextLi.className = `page-item ${currentTrackingPage === totalPages ? 'disabled' : ''}`;
+            nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>`;
+            nextLi.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentTrackingPage < totalPages) {
+                    currentTrackingPage++;
+                    displayTrackingData();
+                    setupTrackingPagination();
+                }
+            });
+            pagination.appendChild(nextLi);
+        }
+        
+        // Setup aduan pagination
+        function setupAduanPagination() {
+            const pagination = document.getElementById('aduanPagination');
+            const totalPages = Math.ceil(filteredAduanData.length / rowsPerPage);
+            
+            pagination.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            // Previous button
+            const prevLi = document.createElement('li');
+            prevLi.className = `page-item ${currentAduanPage === 1 ? 'disabled' : ''}`;
+            prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>`;
+            prevLi.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentAduanPage > 1) {
+                    currentAduanPage--;
+                    displayAduanData();
+                    setupAduanPagination();
+                }
+            });
+            pagination.appendChild(prevLi);
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                const li = document.createElement('li');
+                li.className = `page-item ${i === currentAduanPage ? 'active' : ''}`;
+                li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                li.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    currentAduanPage = i;
+                    displayAduanData();
+                    setupAduanPagination();
+                });
+                pagination.appendChild(li);
+            }
+            
+            // Next button
+            const nextLi = document.createElement('li');
+            nextLi.className = `page-item ${currentAduanPage === totalPages ? 'disabled' : ''}`;
+            nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>`;
+            nextLi.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentAduanPage < totalPages) {
+                    currentAduanPage++;
+                    displayAduanData();
+                    setupAduanPagination();
+                }
+            });
+            pagination.appendChild(nextLi);
+        }
+        
+        // View surat details
+        function viewSurat(nik) {
+            const item = suratData.find(data => data.NIK === nik);
+            if (item) {
+                alert(`Detail Pengajuan Surat:\n\nNama: ${item['Nama Lengkap']}\nNIK: ${item.NIK}\nJenis Surat: ${item['Jenis Surat']}\nKasi Tujuan: ${item['Kasi Tujuan']}\nTanggal Pengajuan: ${item['Tanggal Pengajuan']}\nStatus: ${generateStatus(item)}`);
+            }
+        }
+        
+        // Edit surat status
+        function editSurat(nik) {
+            const item = suratData.find(data => data.NIK === nik);
+            if (!item) return;
+            
+            const currentStatus = generateStatus(item);
+            
+            // Fill modal with data
+            document.getElementById('editSuratNIK').value = nik;
+            document.getElementById('editSuratNama').value = item['Nama Lengkap'] || '';
+            document.getElementById('editSuratNIKDisplay').value = nik;
+            document.getElementById('editSuratJenis').value = item['Jenis Surat'] || '';
+            document.getElementById('editSuratTanggal').value = item['Tanggal Pengajuan'] || '';
+            
+            // Set current status badge
+            const statusBadge = document.getElementById('currentStatusBadge');
+            statusBadge.textContent = currentStatus;
+            statusBadge.className = `status-badge status-${currentStatus.toLowerCase().replace(' ', '')}`;
+            
+            // Generate timeline preview
+            generateTimelinePreview(currentStatus);
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('editSuratModal'));
+            modal.show();
+        }
+        
+        // View tracking details
+        function viewTracking(nik) {
+            const item = suratData.find(data => data.NIK === nik);
+            if (item) {
+                const status = generateStatus(item);
+                const progress = generateProgress(status);
+                alert(`Detail Tracking:\n\nNama: ${item['Nama Lengkap']}\nNIK: ${item.NIK}\nJenis Surat: ${item['Jenis Surat']}\nStatus: ${status}\nProgress: ${progress}%`);
+            }
+        }
+        
+        // Edit tracking status
+        function editTracking(nik) {
+            const item = suratData.find(data => data.NIK === nik);
+            if (!item) return;
+            
+            const currentStatus = generateStatus(item);
+            const currentProgress = generateProgress(currentStatus);
+            
+            // Fill modal with data
+            document.getElementById('editTrackingNIK').value = nik;
+            document.getElementById('editTrackingNama').value = item['Nama Lengkap'] || '';
+            document.getElementById('editTrackingNIKDisplay').value = nik;
+            document.getElementById('editTrackingJenis').value = item['Jenis Surat'] || '';
+            document.getElementById('editTrackingTanggal').value = item['Tanggal Pengajuan'] || '';
+            
+            // Set current status and progress
+            const statusBadge = document.getElementById('currentTrackingStatusBadge');
+            statusBadge.textContent = currentStatus;
+            statusBadge.className = `status-badge status-${currentStatus.toLowerCase().replace(' ', '')}`;
+            
+            document.getElementById('currentProgressBar').style.width = `${currentProgress}%`;
+            document.getElementById('currentProgressText').textContent = `${currentProgress}%`;
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('editTrackingModal'));
+            modal.show();
+        }
+        
+        // View aduan details
+        function viewAduan(nomorAduan) {
+            const item = aduanData.find(data => data['Nomor Aduan'] === nomorAduan);
+            if (item) {
+                alert(`Detail Aduan:\n\nNomor Aduan: ${item['Nomor Aduan']}\nNama: ${item['Nama Lengkap']}\nJenis Aduan: ${item['Jenis Aduan']}\nJudul: ${item['Judul Aduan']}\nStatus: ${item.Status}`);
+            }
+        }
+        
+        // Edit aduan status
+        function editAduan(nomorAduan) {
+            alert(`Fungsi edit status aduan untuk ${nomorAduan} akan segera tersedia!`);
+        }
+        
+        // Generate timeline preview
+        function generateTimelinePreview(currentStatus) {
+            const steps = [
+                { name: 'Pengajuan Diterima', status: 'completed' },
+                { name: 'Verifikasi Dokumen', status: currentStatus === 'Menunggu' ? 'current' : 
+                    ['Verifikasi Dokumen', 'Proses Administrasi', 'Selesai'].includes(currentStatus) ? 'completed' : 'pending' },
+                { name: 'Proses Administrasi', status: currentStatus === 'Proses Administrasi' ? 'current' : 
+                    currentStatus === 'Selesai' ? 'completed' : 'pending' },
+                { name: 'Selesai', status: currentStatus === 'Selesai' ? 'completed' : 'pending' }
+            ];
+            
+            const timelineContainer = document.getElementById('timelinePreview');
+            timelineContainer.innerHTML = '';
+            
+            steps.forEach(step => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = `timeline-step ${step.status}`;
+                
+                let icon = '';
+                if (step.status === 'completed') icon = '<i class="bi bi-check-circle-fill timeline-step-icon"></i>';
+                else if (step.status === 'current') icon = '<i class="bi bi-clock-fill timeline-step-icon"></i>';
+                else icon = '<i class="bi bi-circle timeline-step-icon"></i>';
+                
+                stepDiv.innerHTML = `
+                    ${icon}
+                    <span>${step.name}</span>
+                `;
+                
+                timelineContainer.appendChild(stepDiv);
+            });
+        }
+        
+        // Setup modal event listeners
+        function setupModalEventListeners() {
+            // Edit surat status change
+            document.getElementById('editSuratStatus').addEventListener('change', function() {
+                const newStatus = this.value;
+                if (newStatus) {
+                    generateTimelinePreview(newStatus);
+                }
+            });
+            
+            // Edit tracking status change
+            document.getElementById('editTrackingStatus').addEventListener('change', function() {
+                const newStatus = this.value;
+                if (newStatus) {
+                    const newProgress = generateProgress(newStatus);
+                    document.getElementById('previewProgressBar').style.width = `${newProgress}%`;
+                    document.getElementById('previewProgressText').textContent = `${newProgress}%`;
+                }
+            });
+            
+            // Save surat status
+            document.getElementById('saveSuratStatus').addEventListener('click', async function() {
+                const nik = document.getElementById('editSuratNIK').value;
+                const newStatus = document.getElementById('editSuratStatus').value;
+                const catatan = document.getElementById('editSuratCatatan').value;
+                const petugas = document.getElementById('editSuratPetugas').value;
+                
+                if (!newStatus || !petugas) {
+                    alert('Status dan Petugas Penanggung Jawab harus diisi!');
+                    return;
+                }
+                
+                try {
+                    // Show loading
+                    const saveBtn = document.getElementById('saveSuratStatus');
+                    const originalText = saveBtn.textContent;
+                    saveBtn.textContent = 'Menyimpan...';
+                    saveBtn.disabled = true;
+                    
+                    // Prepare data for Google Apps Script
+                    const updateData = {
+                        nik: nik,
+                        status: newStatus,
+                        catatan: catatan,
+                        petugas: petugas,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    // Send to Google Apps Script
+                    const response = await fetch(suratScriptURL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `action=updateStatus&data=${encodeURIComponent(JSON.stringify(updateData))}`
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success) {
+                            alert(`Status berhasil diubah menjadi: ${newStatus}\nPetugas: ${petugas}`);
+                            
+                            // Close modal
+                            const modal = bootstrap.Modal.getInstance(document.getElementById('editSuratModal'));
+                            modal.hide();
+                            
+                            // Refresh data
+                            await fetchSuratData();
+                        } else {
+                            throw new Error(result.message || 'Gagal mengupdate status');
+                        }
+                    } else {
+                        throw new Error('Network error');
+                    }
+                    
+                } catch (error) {
+                    console.error('Error updating status:', error);
+                    alert('Gagal mengupdate status. Silakan coba lagi.');
+                } finally {
+                    // Restore button
+                    const saveBtn = document.getElementById('saveSuratStatus');
+                    saveBtn.textContent = originalText;
+                    saveBtn.disabled = false;
+                }
+            });
+            
+            // Save tracking status
+            document.getElementById('saveTrackingStatus').addEventListener('click', async function() {
+                const nik = document.getElementById('editTrackingNIK').value;
+                const newStatus = document.getElementById('editTrackingStatus').value;
+                const catatan = document.getElementById('editTrackingCatatan').value;
+                const petugas = document.getElementById('editTrackingPetugas').value;
+                
+                if (!newStatus || !petugas) {
+                    alert('Status dan Petugas Penanggung Jawab harus diisi!');
+                    return;
+                }
+                
+                try {
+                    // Show loading
+                    const saveBtn = document.getElementById('saveTrackingStatus');
+                    const originalText = saveBtn.textContent;
+                    saveBtn.textContent = 'Menyimpan...';
+                    saveBtn.disabled = true;
+                    
+                    // Prepare data for Google Apps Script
+                    const updateData = {
+                        nik: nik,
+                        status: newStatus,
+                        catatan: catatan,
+                        petugas: petugas,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    // Send to Google Apps Script
+                    const response = await fetch(suratScriptURL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `action=updateStatus&data=${encodeURIComponent(JSON.stringify(updateData))}`
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success) {
+                            alert(`Status tracking berhasil diubah menjadi: ${newStatus}\nPetugas: ${petugas}`);
+                            
+                            // Close modal
+                            const modal = bootstrap.Modal.getInstance(document.getElementById('editTrackingModal'));
+                            modal.hide();
+                            
+                            // Refresh data
+                            await fetchSuratData();
+                        } else {
+                            throw new Error(result.message || 'Gagal mengupdate status');
+                        }
+                    } else {
+                        throw new Error('Network error');
+                    }
+                    
+                } catch (error) {
+                    console.error('Error updating tracking status:', error);
+                    alert('Gagal mengupdate status tracking. Silakan coba lagi.');
+                } finally {
+                    // Restore button
+                    const saveBtn = document.getElementById('saveTrackingStatus');
+                    saveBtn.textContent = originalText;
+                    saveBtn.disabled = false;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

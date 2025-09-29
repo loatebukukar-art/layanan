@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking Permohonan Surat - Kelurahan Loa Tebu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .tracking-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .tracking-title {
+            color: #667eea;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-track {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 500;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .btn-track:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .btn-back:hover {
+            background-color: #5a6268;
+            color: white;
+            text-decoration: none;
+        }
+        .status-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid #667eea;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        .status-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .status-diproses {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        .status-selesai {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-menunggu {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .status-ditolak {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% + 1rem);
+            background: #e5e7eb;
+            z-index: 1;
+        }
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        .timeline-item.completed::before {
+            background: #28a745;
+        }
+        .timeline-item.current::before {
+            background: #ffc107;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+        .no-data i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        .info-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .info-card h5 {
+            margin-bottom: 1rem;
+        }
+        .info-card ul {
+            margin-bottom: 0;
+            padding-left: 1.5rem;
+        }
+        .info-card li {
+            margin-bottom: 0.5rem;
+        }
+        .download-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .btn-download {
+            background-color: #198754;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin: 2px;
+        }
+        .btn-download:hover {
+            background-color: #157347;
+            color: white;
+        }
+        .btn-download:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark hero-gradient shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-house-door me-2"></i>Kelurahan Loa Tebu
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profil.html">Profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="statistik.html">Statistik</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="form.html">Form Layanan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="aduan.html">Kotak Aduan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="tracking.html">Tracking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html">Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-4">
+        <div class="container text-center">
+            <h1 class="display-5 fw-bold mb-3">
+                <i class="bi bi-search me-3"></i>Tracking Permohonan Surat
+            </h1>
+            <p class="lead">Lacak status pengajuan surat Anda menggunakan NIK</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="tracking-container">
+                <h2 class="tracking-title text-center">Cari Status Permohonan</h2>
+                
+                <!-- Info Card -->
+                <div class="info-card">
+                    <h5><i class="bi bi-info-circle me-2"></i>Informasi Tracking</h5>
+                    <ul>
+                        <li>Masukkan NIK (Nomor Induk Kependudukan) 16 digit untuk melacak status pengajuan</li>
+                        <li>Data yang ditampilkan adalah pengajuan surat yang telah terdaftar dalam sistem</li>
+                        <li>Jika tidak ditemukan, kemungkinan pengajuan belum terdaftar atau NIK salah</li>
+                        <li>Untuk informasi lebih lanjut, hubungi kantor kelurahan</li>
+                    </ul>
+                </div>
+
+                <!-- Search Form -->
+                <form id="trackingForm">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label for="nik" class="form-label fw-bold">Nomor Induk Kependudukan (NIK)</label>
+                                <input type="text" class="form-control" id="nik" placeholder="Masukkan NIK 16 digit" maxlength="16" pattern="[0-9]{16}" required>
+                                <div class="form-text">Masukkan 16 digit NIK tanpa spasi atau tanda baca</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button type="submit" class="btn btn-track w-100" id="trackBtn">
+                                <i class="bi bi-search me-2"></i>Cari Status
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Loading Spinner -->
+                <div class="loading" id="loadingSpinner" style="display: none;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Mencari data pengajuan...</p>
+                </div>
+
+                <!-- No Data Message -->
+                <div class="no-data" id="noDataMessage" style="display: none;">
+                    <i class="bi bi-search"></i>
+                    <h4>Tidak Ada Data Ditemukan</h4>
+                    <p>Belum ada pengajuan surat yang terdaftar dengan NIK tersebut.</p>
+                    <p class="text-muted">Pastikan NIK yang dimasukkan sudah benar atau pengajuan belum terdaftar dalam sistem.</p>
+                </div>
+
+                <!-- Results Section -->
+                <div id="resultsSection" style="display: none;">
+                    <!-- Summary Card -->
+                    <div class="status-card">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h5 class="mb-2">
+                                    <i class="bi bi-person-circle me-2"></i>
+                                    <span id="applicantName">-</span>
+                                </h5>
+                                <p class="text-muted mb-1">NIK: <span id="applicantNIK">-</span></p>
+                                <p class="text-muted mb-0">Total Pengajuan: <span id="totalApplications">-</span></p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <span class="status-badge" id="overallStatus">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Applications List -->
+                    <div id="applicationsList">
+                        <!-- Applications will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Back Button -->
+                <div class="text-center mt-4">
+                    <a href="index.html" class="btn-back">
+                        <i class="bi bi-arrow-left me-2"></i>Kembali ke Beranda
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="hero-gradient text-white py-4 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h5 class="fw-bold mb-2">
+                        <i class="bi bi-building me-2"></i>Kelurahan Loa Tebu
+                    </h5>
+                    <p class="mb-0">Kecamatan Tenggarong, Kabupaten Kutai Kartanegara</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">&copy; 2025 Kelurahan Loa Tebu. Sistem tracking online.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // URL untuk mengambil data pengajuan surat
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzllWyoIISQ7qzjpGjsH52O5t-749owDTidaDPBv3PgM6mnC0X9-W9wEn7LTcc_Pe4r/exec';
+        
+        let allData = [];
+        
+        // Load data saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchData();
+            setupEventListeners();
+        });
+        
+        function setupEventListeners() {
+            // Form submission
+            document.getElementById('trackingForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nik = document.getElementById('nik').value.trim();
+                
+                if (nik.length !== 16 || !/^\d{16}$/.test(nik)) {
+                    alert('NIK harus berupa 16 digit angka');
+                    return;
+                }
+                
+                searchByNIK(nik);
+            });
+            
+            // NIK input formatting
+            document.getElementById('nik').addEventListener('input', function(e) {
+                // Remove non-numeric characters
+                this.value = this.value.replace(/\D/g, '');
+            });
+        }
+        
+        // Fetch all data
+        function fetchData() {
+            fetch(scriptURL)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    allData = data;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+        
+        // Search by NIK
+        function searchByNIK(nik) {
+            // Show loading
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('noDataMessage').style.display = 'none';
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('trackBtn').disabled = true;
+            
+            // Simulate loading delay
+            setTimeout(() => {
+                const userApplications = allData.filter(item => item.NIK === nik);
+                
+                // Hide loading
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('trackBtn').disabled = false;
+                
+                if (userApplications.length === 0) {
+                    document.getElementById('noDataMessage').style.display = 'block';
+                    return;
+                }
+                
+                // Show results
+                displayResults(userApplications, nik);
+            }, 1000);
+        }
+        
+        // Display search results
+        function displayResults(applications, nik) {
+            const applicant = applications[0];
+            
+            // Update summary
+            document.getElementById('applicantName').textContent = applicant['Nama Lengkap'] || 'Tidak diketahui';
+            document.getElementById('applicantNIK').textContent = nik;
+            document.getElementById('totalApplications').textContent = applications.length;
+            
+            // Determine overall status
+            const statuses = applications.map(app => app.Status || 'Menunggu');
+            const overallStatus = getOverallStatus(statuses);
+            document.getElementById('overallStatus').textContent = overallStatus;
+            document.getElementById('overallStatus').className = `status-badge status-${overallStatus.toLowerCase().replace(' ', '')}`;
+            
+            // Display applications
+            displayApplications(applications);
+            
+            // Show results section
+            document.getElementById('resultsSection').style.display = 'block';
+        }
+        
+        // Get overall status based on all applications
+        function getOverallStatus(statuses) {
+            if (statuses.includes('Selesai')) return 'Selesai';
+            if (statuses.includes('Diproses')) return 'Diproses';
+            if (statuses.includes('Menunggu')) return 'Menunggu';
+            return 'Tidak Diketahui';
+        }
+        
+        // Display individual applications
+        function displayApplications(applications) {
+            const container = document.getElementById('applicationsList');
+            container.innerHTML = '';
+            
+            applications.forEach((app, index) => {
+                const appCard = createApplicationCard(app, index);
+                container.appendChild(appCard);
+            });
+        }
+        
+        // Create application card
+        function createApplicationCard(app, index) {
+            const card = document.createElement('div');
+            card.className = 'status-card';
+            
+            const timestamp = app.Timestamp ? new Date(app.Timestamp).toLocaleString('id-ID') : '-';
+            const tanggalPengajuan = app['Tanggal Pengajuan'] || '-';
+            const status = app.Status || 'Menunggu';
+            const statusClass = `status-${status.toLowerCase().replace(' ', '')}`;
+            
+            // Create timeline for this application
+            const timeline = createTimeline(status);
+            
+            card.innerHTML = `
+                <div class="row">
+                    <div class="col-md-8">
+                        <h6 class="fw-bold mb-2">
+                            <i class="bi bi-file-text me-2"></i>
+                            Pengajuan #${index + 1}
+                        </h6>
+                        <p class="mb-1"><strong>Jenis Surat:</strong> ${app['Jenis Surat'] || '-'}</p>
+                        <p class="mb-1"><strong>Kasi Tujuan:</strong> ${app['Kasi Tujuan'] || '-'}</p>
+                        <p class="mb-1"><strong>Tanggal Pengajuan:</strong> ${tanggalPengajuan}</p>
+                        <p class="mb-0"><strong>Waktu Submit:</strong> ${timestamp}</p>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <span class="status-badge ${statusClass}">${status}</span>
+                    </div>
+                </div>
+                
+                <!-- Timeline -->
+                <div class="mt-3">
+                    <h6 class="mb-3">Status Proses:</h6>
+                    <div class="timeline">
+                        ${timeline}
+                    </div>
+                </div>
+                
+                <!-- Download Section -->
+                <div class="download-section">
+                    <h6 class="mb-3">Dokumen Pendukung:</h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button class="btn btn-download w-100" ${app['Link KTP'] ? `onclick="downloadFile('${app['Link KTP']}', 'KTP')"` : 'disabled'}>
+                                <i class="bi bi-download me-2"></i>KTP
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-download w-100" ${app['Link KK'] ? `onclick="downloadFile('${app['Link KK']}', 'KK')"` : 'disabled'}>
+                                <i class="bi bi-download me-2"></i>Kartu Keluarga
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-download w-100" ${app['Link Surat RT'] ? `onclick="downloadFile('${app['Link Surat RT']}', 'Surat RT')"` : 'disabled'}>
+                                <i class="bi bi-download me-2"></i>Surat RT
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        // Create timeline based on status
+        function createTimeline(status) {
+            const steps = [
+                { name: 'Pengajuan Diterima', status: 'completed' },
+                { name: 'Verifikasi Dokumen', status: status === 'Menunggu' ? 'current' : status === 'Diproses' || status === 'Selesai' ? 'completed' : 'pending' },
+                { name: 'Proses Administrasi', status: status === 'Diproses' ? 'current' : status === 'Selesai' ? 'completed' : 'pending' },
+                { name: 'Selesai', status: status === 'Selesai' ? 'completed' : 'pending' }
+            ];
+            
+            return steps.map(step => `
+                <div class="timeline-item ${step.status}">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">${step.name}</h6>
+                            <small class="text-muted">
+                                ${step.status === 'completed' ? 'Selesai' : 
+                                  step.status === 'current' ? 'Sedang Diproses' : 
+                                  'Menunggu'}
+                            </small>
+                        </div>
+                        <div>
+                            ${step.status === 'completed' ? '<i class="bi bi-check-circle-fill text-success"></i>' :
+                              step.status === 'current' ? '<i class="bi bi-clock-fill text-warning"></i>' :
+                              '<i class="bi bi-circle text-muted"></i>'}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Download file function
+        function downloadFile(url, filename) {
+            if (url) {
+                window.open(url, '_blank');
+            } else {
+                alert(`${filename} belum tersedia`);
+            }
+        }
+    </script>
+</body>
+</html>

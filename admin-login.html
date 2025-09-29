@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin - Sistem Formulir Layanan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            line-height: 1.6;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background-color: var(--bg-primary);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-xl);
+            padding: 3rem;
+            max-width: 450px;
+            width: 100%;
+            margin: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .login-title {
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--bg-primary);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+
+        .form-control.is-invalid {
+            border-color: var(--danger-color);
+        }
+
+        .form-control.is-invalid:focus {
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group .form-control {
+            padding-right: 3rem;
+        }
+
+        .input-group-text {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            color: white;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            letter-spacing: 0.025em;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .btn-login:hover {
+            background: linear-gradient(135deg, var(--primary-dark), #1e40af);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-login:hover::before {
+            left: 100%;
+        }
+
+        .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-login:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .alert {
+            border-radius: var(--border-radius);
+            border: none;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-danger {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .alert-success {
+            background-color: #f0fdf4;
+            color: #16a34a;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .back-link a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .back-link a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 576px) {
+            .login-container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+
+            .login-title {
+                font-size: 1.5rem;
+            }
+
+            .login-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Focus States for Accessibility */
+        .btn-login:focus,
+        .form-control:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="login-icon">
+                <i class="bi bi-shield-lock"></i>
+            </div>
+            <h1 class="login-title">Login Admin</h1>
+            <p class="login-subtitle">Akses terbatas untuk admin kelurahan</p>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username" class="form-label">
+                    <i class="bi bi-person me-1"></i> Username
+                </label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="username" 
+                    name="username" 
+                    placeholder="Masukkan username"
+                    required
+                    autocomplete="username"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">
+                    <i class="bi bi-lock me-1"></i> Password
+                </label>
+                <div class="input-group">
+                    <input 
+                        type="password" 
+                        class="form-control" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Masukkan password"
+                        required
+                        autocomplete="current-password"
+                    >
+                    <span class="input-group-text" id="togglePassword">
+                        <i class="bi bi-eye" id="toggleIcon"></i>
+                    </span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login" id="loginBtn">
+                <span id="loginText">
+                    <i class="bi bi-box-arrow-in-right me-1"></i>
+                    Masuk
+                </span>
+                <div id="loginSpinner" class="loading-spinner" style="display: none;"></div>
+            </button>
+        </form>
+
+        <div class="back-link">
+            <a href="index.html">
+                <i class="bi bi-arrow-left me-1"></i>
+                Kembali ke Halaman Utama
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Konfigurasi API
+        const API_CONFIG = {
+            // Ganti dengan URL Web App Google Apps Script Anda
+            BASE_URL: 'https://script.google.com/macros/s/AKfycbxSIdAZv65KAGIU_-6mblEpaK4YjRtUOfRfVbNkNyUUEqjoKumx_IaNq8XimmfTu8JP/exec',
+            
+            // Timeout untuk request (dalam milliseconds)
+            TIMEOUT: 10000,
+            
+            // Mode development untuk testing lokal
+            DEVELOPMENT_MODE: true,
+            
+            // Data admin untuk testing lokal (hapus setelah Apps Script aktif)
+            TEST_ADMINS: [
+                { username: 'admin_kelurahan', password: 'admin123', nama: 'Admin Kelurahan', role: 'admin' },
+                { username: 'kepala_kelurahan', password: 'kepala123', nama: 'Kepala Kelurahan', role: 'admin' },
+                { username: 'sekretaris', password: 'sekret123', nama: 'Sekretaris Kelurahan', role: 'admin' },
+                { username: 'staff_admin', password: 'staff123', nama: 'Staff Admin', role: 'admin' }
+            ]
+        };
+
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginText = document.getElementById('loginText');
+        const loginSpinner = document.getElementById('loginSpinner');
+        const alertContainer = document.getElementById('alertContainer');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggleIcon');
+
+        // Toggle password visibility
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            if (type === 'text') {
+                toggleIcon.classList.remove('bi-eye');
+                toggleIcon.classList.add('bi-eye-slash');
+            } else {
+                toggleIcon.classList.remove('bi-eye-slash');
+                toggleIcon.classList.add('bi-eye');
+            }
+        });
+
+        // Show alert function
+        function showAlert(message, type = 'danger') {
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type}" role="alert">
+                    <i class="bi bi-${type === 'danger' ? 'exclamation-triangle' : 'check-circle'} me-2"></i>
+                    ${message}
+                </div>
+            `;
+        }
+
+        // Clear alerts
+        function clearAlerts() {
+            alertContainer.innerHTML = '';
+        }
+
+        // Set loading state
+        function setLoading(loading) {
+            if (loading) {
+                loginBtn.disabled = true;
+                loginText.style.display = 'none';
+                loginSpinner.style.display = 'block';
+            } else {
+                loginBtn.disabled = false;
+                loginText.style.display = 'flex';
+                loginSpinner.style.display = 'none';
+            }
+        }
+
+        // Validate form
+        function validateForm(formData) {
+            const errors = [];
+            
+            if (!formData.username.trim()) {
+                errors.push('Username harus diisi');
+            }
+            
+            if (!formData.password.trim()) {
+                errors.push('Password harus diisi');
+            }
+            
+            if (formData.username.length < 3) {
+                errors.push('Username minimal 3 karakter');
+            }
+            
+            if (formData.password.length < 6) {
+                errors.push('Password minimal 6 karakter');
+            }
+            
+            return errors;
+        }
+
+        // Login function dengan fallback
+        async function login(username, password) {
+            // Jika dalam mode development, gunakan data test lokal
+            if (API_CONFIG.DEVELOPMENT_MODE) {
+                console.log('Development mode: Menggunakan data test lokal');
+                return loginWithFallback(username, password);
+            }
+
+            try {
+                const response = await fetch(API_CONFIG.BASE_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'login',
+                        username: username,
+                        password: password
+                    }),
+                    timeout: API_CONFIG.TIMEOUT
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                // Jika gagal, coba fallback
+                console.log('Mencoba fallback mechanism...');
+                return loginWithFallback(username, password);
+            }
+        }
+
+        // Fallback login function untuk testing lokal
+        function loginWithFallback(username, password) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const admin = API_CONFIG.TEST_ADMINS.find(
+                        a => a.username === username && a.password === password
+                    );
+
+                    if (admin) {
+                        const token = generateTestToken(admin);
+                        resolve({
+                            success: true,
+                            message: 'Login berhasil (Development Mode)',
+                            data: {
+                                token: token,
+                                user: {
+                                    username: admin.username,
+                                    nama: admin.nama,
+                                    role: admin.role
+                                }
+                            }
+                        });
+                    } else {
+                        resolve({
+                            success: false,
+                            message: 'Username atau password salah'
+                        });
+                    }
+                }, 500); // Simulasi delay network
+            });
+        }
+
+        // Generate test token untuk development
+        function generateTestToken(admin) {
+            const tokenData = {
+                username: admin.username,
+                nama: admin.nama,
+                role: admin.role,
+                timestamp: Date.now(),
+                exp: Date.now() + (24 * 60 * 60 * 1000) // 24 jam
+            };
+            return btoa(JSON.stringify(tokenData));
+        }
+
+        // Handle form submission
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            clearAlerts();
+            
+            const formData = {
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value
+            };
+
+            // Validate form
+            const errors = validateForm(formData);
+            if (errors.length > 0) {
+                showAlert(errors.join('<br>'));
+                return;
+            }
+
+            setLoading(true);
+
+            try {
+                const result = await login(formData.username, formData.password);
+                
+                if (result.success) {
+                    // Simpan token dan data user di localStorage
+                    localStorage.setItem('adminToken', result.data.token);
+                    localStorage.setItem('adminUser', JSON.stringify(result.data.user));
+                    
+                    showAlert('Login berhasil! Mengalihkan ke halaman admin...', 'success');
+                    
+                    // Redirect ke halaman admin setelah 1.5 detik
+                    setTimeout(() => {
+                        window.location.href = 'admin.html';
+                    }, 1500);
+                } else {
+                    showAlert(result.message || 'Login gagal. Periksa username dan password Anda.');
+                }
+            } catch (error) {
+                showAlert(error.message || 'Terjadi kesalahan. Silakan coba lagi.');
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        // Check if already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('adminToken');
+            const user = localStorage.getItem('adminUser');
+            
+            if (token && user) {
+                // Verify token
+                fetch(API_CONFIG.BASE_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'verify',
+                        token: token
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Token masih valid, redirect ke admin
+                        window.location.href = 'admin.html';
+                    } else {
+                        // Token expired, clear storage
+                        localStorage.removeItem('adminToken');
+                        localStorage.removeItem('adminUser');
+                    }
+                })
+                .catch(error => {
+                    console.error('Token verification error:', error);
+                    localStorage.removeItem('adminToken');
+                    localStorage.removeItem('adminUser');
+                });
+            }
+        });
+
+        // Add enter key support
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !loginBtn.disabled) {
+                loginForm.dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+</html>
